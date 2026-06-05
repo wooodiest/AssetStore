@@ -25,6 +25,7 @@ public static class DbInitializer
         await SeedDemoCreatorsAsync(userManager, configuration, logger);
         await SeedCategoriesAsync(context, logger);
         await SeedDemoAssetsAsync(context, userManager, configuration, logger);
+        await SeedDemoUsersAndActivityAsync(context, userManager, configuration, logger);
     }
 
     private static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager, ILogger logger)
@@ -218,6 +219,123 @@ public static class DbInitializer
         context.Assets.AddRange(demoAssets);
         await context.SaveChangesAsync();
         logger.LogInformation("Seeded {Count} demo assets.", demoAssets.Count);
+    }
+
+    private static async Task SeedDemoUsersAndActivityAsync(
+        ApplicationDbContext context,
+        UserManager<ApplicationUser> userManager,
+        IConfiguration configuration,
+        ILogger logger)
+    {
+        var usersDefaults = new[]
+        {
+            new { Email = configuration["Seed:DemoUserEmail1"] ?? "", Password = configuration["Seed:DemoUserPassword1"] ?? "Useruser1@assetstore.local123!" },
+            new { Email = configuration["Seed:DemoUserEmail2"] ?? "user2@assetstore.local", Password = configuration["Seed:DemoUserPassword2"] ?? "User123!" },
+            new { Email = configuration["Seed:DemoUserEmail3"] ?? "user3@assetstore.local", Password = configuration["Seed:DemoUserPassword3"] ?? "User123!" }
+        };
+
+        var demoUsers = new List<ApplicationUser>();
+        foreach (var u in usersDefaults)
+        {
+            var user = await userManager.FindByEmailAsync(u.Email);
+            if (user is null)
+            {
+                user = new ApplicationUser
+                {
+                    UserName = u.Email,
+                    Email = u.Email,
+                    EmailConfirmed = true,
+                    CreatedAt = DateTime.UtcNow,
+                    IsActive = true
+                };
+
+                var res = await userManager.CreateAsync(user, u.Password);
+                if (!res.Succeeded)
+                {
+                    logger.LogError("Failed to create demo user {Email}: {Errors}", u.Email, string.Join(", ", res.Errors.Select(e => e.Description)));
+                    continue;
+                }
+            }
+
+            if (await userManager.IsInRoleAsync(user, AppRoles.Creator))
+            {
+                await userManager.RemoveFromRoleAsync(user, AppRoles.Creator);
+            }
+            if (await userManager.IsInRoleAsync(user, AppRoles.Administrator))
+            {
+                await userManager.RemoveFromRoleAsync(user, AppRoles.Administrator);
+            }
+
+            demoUsers.Add(user);
+        }
+
+        if (demoUsers.Count == 0)
+        {
+            logger.LogWarning("No demo users available for activity seeding.");
+            return;
+        }
+
+        var assets = await context.Assets.Where(a => !a.IsDeleted).ToListAsync();
+        if (assets.Count == 0)
+        {
+            logger.LogWarning("No assets available for purchase seeding.");
+            return;
+        }
+
+
+        bool hasDemoActivity = await context.Transactions.AnyAsync(t => demoUsers.Select(d => d.Id).Contains(t.UserId));
+        if (hasDemoActivity)
+        {
+            logger.LogInformation("Demo user activity already exists, skipping activity seeding.");
+            return;
+        }
+
+        var transactions = new List<Transaction>();
+        var reviews = new List<Review>();
+
+        for (int i = 0; i < demoUsers.Count; i++)
+        {
+            var user = demoUsers[i];
+            for (int j = 0; j < 4; j++)
+            {
+                var asset = assets[(i * 4 + j) % assets.Count];
+                transactions.Add(new Transaction
+                {
+                    AssetId = asset.Id,
+                    UserId = user.Id,
+                    Amount = asset.Price,
+                    PurchaseDate = DateTime.UtcNow.AddDays(-(i * 4 + j))
+                });
+
+                if (j < 2 && asset.CreatorId != user.Id)
+                {
+                    if (!await context.Reviews.AnyAsync(r => r.AssetId == asset.Id && r.UserId == user.Id))
+                    {
+                        var rating = ((i + j) % 5) + 1;
+                        reviews.Add(new Review
+                        {
+                            AssetId = asset.Id,
+                            UserId = user.Id,
+                            Rating = rating,
+                            Comment = $"Great asset: {asset.Title} - useful in many scenes.",
+                            PostedAt = DateTime.UtcNow.AddDays(-(i * 4 + j))
+                        });
+                    }
+                }
+            }
+        }
+
+        if (transactions.Count > 0)
+        {
+            await context.Transactions.AddRangeAsync(transactions);
+        }
+        if (reviews.Count > 0)
+        {
+            await context.Reviews.AddRangeAsync(reviews);
+        }
+
+        await context.SaveChangesAsync();
+        logger.LogInformation("Seeded {TxCount} demo transactions and {RvCount} demo reviews.", transactions.Count, reviews.Count);
     }
 }
 
