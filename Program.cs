@@ -35,7 +35,17 @@ builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IAssetAuthorizationService, AssetAuthorizationService>();
 builder.Services.AddScoped<IPurchaseService, PurchaseService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
-builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
+
+var storageProvider = builder.Configuration["FileStorage:Provider"] ?? "Local";
+if (string.Equals(storageProvider, "Azure", StringComparison.OrdinalIgnoreCase))
+{
+    builder.Services.AddScoped<IFileStorageService, AzureBlobStorageService>();
+}
+else
+{
+    builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
+}
+
 builder.Services.AddScoped<IAssetService, AssetService>();
 builder.Services.AddScoped<ICreatorDashboardService, CreatorDashboardService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
