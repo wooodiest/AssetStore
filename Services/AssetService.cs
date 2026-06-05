@@ -13,6 +13,7 @@ public class AssetService : IAssetService
     private readonly IAssetRepository _assetRepository;
     private readonly ICategoryRepository _categoryRepository;
     private readonly ITransactionRepository _transactionRepository;
+    private readonly IReviewRepository _reviewRepository;
     private readonly IAssetAuthorizationService _assetAuthorizationService;
     private readonly IFileStorageService _fileStorageService;
 
@@ -20,12 +21,14 @@ public class AssetService : IAssetService
         IAssetRepository assetRepository,
         ICategoryRepository categoryRepository,
         ITransactionRepository transactionRepository,
+        IReviewRepository reviewRepository,
         IAssetAuthorizationService assetAuthorizationService,
         IFileStorageService fileStorageService)
     {
         _assetRepository = assetRepository;
         _categoryRepository = categoryRepository;
         _transactionRepository = transactionRepository;
+        _reviewRepository = reviewRepository;
         _assetAuthorizationService = assetAuthorizationService;
         _fileStorageService = fileStorageService;
     }
@@ -77,6 +80,13 @@ public class AssetService : IAssetService
         var reviews = asset.Reviews.Select(AssetMappings.ToReviewItemDto).ToList();
         var averageRating = reviews.Count > 0 ? reviews.Average(r => r.Rating) : 0;
 
+        var hasReviewed = isAuthenticated
+            && await _reviewRepository.ExistsAsync(id, userId!, cancellationToken);
+
+        var hasAcquiredForReview = isAuthenticated
+            && !isOwner
+            && await _transactionRepository.HasPurchasedAsync(userId!, id, cancellationToken);
+
         return new AssetDetailsDto
         {
             Id = asset.Id,
@@ -92,7 +102,9 @@ public class AssetService : IAssetService
             IsOwner = isOwner,
             HasPurchased = hasPurchased,
             CanPurchase = isAuthenticated && !isOwner && !hasPurchased,
-            CanDownload = isAuthenticated && (isOwner || hasPurchased)
+            CanDownload = isAuthenticated && (isOwner || hasPurchased),
+            HasReviewed = hasReviewed,
+            CanReview = hasAcquiredForReview && !hasReviewed
         };
     }
 

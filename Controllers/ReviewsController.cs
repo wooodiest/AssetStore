@@ -1,5 +1,4 @@
 using AssetStore.Dto.Reviews;
-using AssetStore.Extensions;
 using AssetStore.Models.Constants;
 using AssetStore.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -25,7 +24,7 @@ public class ReviewsController : Controller
     {
         if (!ModelState.IsValid)
         {
-            TempData["Error"] = "Invalid review data.";
+            TempData["Error"] = "Nieprawidłowe dane recenzji.";
             return RedirectToAction("Details", "Assets", new { id = dto.AssetId });
         }
 
@@ -36,18 +35,31 @@ public class ReviewsController : Controller
         }
 
         var result = await _reviewService.CreateReviewAsync(dto, userId, cancellationToken);
-        return this.ToActionResult(result, _ =>
+        if (!result.Success)
         {
-            TempData["Success"] = "Review submitted successfully.";
+            TempData["Error"] = result.ErrorMessage;
             return RedirectToAction("Details", "Assets", new { id = dto.AssetId });
-        });
+        }
+
+        TempData["Success"] = "Recenzja została dodana.";
+        return RedirectToAction("Details", "Assets", new { id = dto.AssetId });
     }
 
     [Authorize(Roles = AppRoles.Administrator)]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Delete(int id, int assetId)
+    public async Task<IActionResult> Delete(int id, int assetId, CancellationToken cancellationToken)
     {
+        var result = await _reviewService.DeleteReviewAsync(id, cancellationToken);
+        if (!result.Success)
+        {
+            TempData["Error"] = result.ErrorMessage;
+        }
+        else
+        {
+            TempData["Success"] = "Recenzja została usunięta.";
+        }
+
         return RedirectToAction("Details", "Assets", new { id = assetId });
     }
 }

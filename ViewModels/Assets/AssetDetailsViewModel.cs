@@ -30,6 +30,10 @@ public class AssetDetailsViewModel
 
     public bool IsOwner { get; init; }
 
+    public bool CanReview { get; init; }
+
+    public bool HasReviewed { get; init; }
+
     public string PriceDisplay => Price == 0 ? "Darmowy" : $"{Price:F2} PLN";
 
     public string PurchaseButtonText => Price == 0 ? "Pobierz za darmo" : $"Kup za {Price:F2} PLN";

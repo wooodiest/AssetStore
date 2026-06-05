@@ -14,6 +14,13 @@ public class ReviewRepository : IReviewRepository
         _context = context;
     }
 
+    public async Task<Review?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await _context.Reviews
+            .AsNoTracking()
+            .FirstOrDefaultAsync(r => r.Id == id, cancellationToken);
+    }
+
     public async Task<IReadOnlyList<Review>> GetByAssetAsync(int assetId, CancellationToken cancellationToken = default)
     {
         return await _context.Reviews

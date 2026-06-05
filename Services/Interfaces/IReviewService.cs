@@ -9,4 +9,8 @@ public interface IReviewService
         CreateReviewDto dto,
         string userId,
         CancellationToken cancellationToken = default);
+
+    Task<ServiceResult> DeleteReviewAsync(
+        int reviewId,
+        CancellationToken cancellationToken = default);
 }

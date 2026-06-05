@@ -30,28 +30,34 @@ public class ReviewService : IReviewService
         if (dto.Rating is < 1 or > 5)
         {
             return ServiceResult<ReviewResponseDto>.Fail(
-                "Rating must be between 1 and 5.",
+                "Ocena musi być w zakresie od 1 do 5.",
                 ServiceErrorCode.BadRequest);
         }
 
         var asset = await _assetRepository.GetByIdAsync(dto.AssetId, cancellationToken);
         if (asset is null)
         {
-            return ServiceResult<ReviewResponseDto>.Fail("Asset not found.", ServiceErrorCode.NotFound);
+            return ServiceResult<ReviewResponseDto>.Fail("Asset nie został znaleziony.", ServiceErrorCode.NotFound);
         }
 
-        if (asset.CreatorId != userId
-            && !await _transactionRepository.HasPurchasedAsync(userId, dto.AssetId, cancellationToken))
+        if (asset.CreatorId == userId)
         {
             return ServiceResult<ReviewResponseDto>.Fail(
-                "You must acquire this asset before leaving a review.",
+                "Nie możesz ocenić własnego asseta.",
+                ServiceErrorCode.Forbidden);
+        }
+
+        if (!await _transactionRepository.HasPurchasedAsync(userId, dto.AssetId, cancellationToken))
+        {
+            return ServiceResult<ReviewResponseDto>.Fail(
+                "Musisz najpierw nabyć ten asset, aby dodać recenzję.",
                 ServiceErrorCode.Forbidden);
         }
 
         if (await _reviewRepository.ExistsAsync(dto.AssetId, userId, cancellationToken))
         {
             return ServiceResult<ReviewResponseDto>.Fail(
-                "You have already reviewed this asset.",
+                "Już dodałeś recenzję do tego asseta.",
                 ServiceErrorCode.Conflict);
         }
 
@@ -74,5 +80,24 @@ public class ReviewService : IReviewService
             Comment = review.Comment,
             PostedAt = review.PostedAt
         });
+    }
+
+    public async Task<ServiceResult> DeleteReviewAsync(
+        int reviewId,
+        CancellationToken cancellationToken = default)
+    {
+        var review = await _reviewRepository.GetByIdAsync(reviewId, cancellationToken);
+        if (review is null)
+        {
+            return ServiceResult.Fail("Recenzja nie została znaleziona.", ServiceErrorCode.NotFound);
+        }
+
+        var deleted = await _reviewRepository.DeleteAsync(reviewId, cancellationToken);
+        if (!deleted)
+        {
+            return ServiceResult.Fail("Nie udało się usunąć recenzji.", ServiceErrorCode.BadRequest);
+        }
+
+        return ServiceResult.Ok();
     }
 }

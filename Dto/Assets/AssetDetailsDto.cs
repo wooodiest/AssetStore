@@ -29,4 +29,8 @@ public class AssetDetailsDto
     public bool HasPurchased { get; init; }
 
     public bool IsOwner { get; init; }
+
+    public bool CanReview { get; init; }
+
+    public bool HasReviewed { get; init; }
 }

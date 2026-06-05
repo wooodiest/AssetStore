@@ -93,7 +93,9 @@ public static class AssetMappings
         CanPurchase = dto.CanPurchase,
         CanDownload = dto.CanDownload,
         HasPurchased = dto.HasPurchased,
-        IsOwner = dto.IsOwner
+        IsOwner = dto.IsOwner,
+        CanReview = dto.CanReview,
+        HasReviewed = dto.HasReviewed
     };
 
     public static AssetFormViewModel ToCreateViewModel(IReadOnlyList<CategoryOptionDto> categories) => new()

@@ -1,6 +1,48 @@
+@model TransactionHistoryViewModel
 @{
     ViewData["Title"] = "Historia transakcji";
 }
 
 <h1>Historia transakcji</h1>
-<p>Wymaga logowania (rola <strong>User</strong>).</p>
+<p class="text-muted">Lista assetów, które nabyłeś lub pobrałeś za darmo.</p>
+
+@if (!Model.Items.Any())
+{
+    <div class="alert alert-info mt-4">
+        Nie masz jeszcze żadnych transakcji.
+        <a asp-controller="Assets" asp-action="Index">Przeglądaj katalog</a>.
+    </div>
+}
+else
+{
+    <div class="table-responsive mt-4">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Asset</th>
+                    <th>Kategoria</th>
+                    <th>Kwota</th>
+                    <th>Data</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.AssetTitle</td>
+                        <td>@item.CategoryName</td>
+                        <td>@item.AmountDisplay</td>
+                        <td>@item.PurchaseDate.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td class="text-end">
+                            <a asp-controller="Assets" asp-action="Details" asp-route-id="@item.AssetId"
+                               class="btn btn-sm btn-outline-primary">Szczegóły</a>
+                            <a asp-controller="Assets" asp-action="Download" asp-route-id="@item.AssetId"
+                               class="btn btn-sm btn-primary">Pobierz</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
