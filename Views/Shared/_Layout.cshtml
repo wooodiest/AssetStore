@@ -11,7 +11,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-0">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AssetStore</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -21,30 +21,30 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Assets" asp-action="Index">Catalog</a>
+                            <a class="nav-link" asp-area="" asp-controller="Assets" asp-action="Index">Catalog</a>
                         </li>
                         @if (User.IsInRole(AppRoles.Creator))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Creator" asp-action="Index">My Assets</a>
+                                <a class="nav-link" asp-area="" asp-controller="Creator" asp-action="Index">My Assets</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Assets" asp-action="Create">Add Asset</a>
+                                <a class="nav-link" asp-area="" asp-controller="Assets" asp-action="Create">Add Asset</a>
                             </li>
                         }
                         @if (User.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Transactions" asp-action="Index">Transactions</a>
+                                <a class="nav-link" asp-area="" asp-controller="Transactions" asp-action="Index">Transactions</a>
                             </li>
                         }
                         @if (User.IsInRole(AppRoles.Administrator))
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" id="adminDropdown" role="button"
+                                <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button"
                                    data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
                                 <ul class="dropdown-menu" aria-labelledby="adminDropdown">
                                     <li><a class="dropdown-item" asp-controller="Admin" asp-action="Index">Dashboard</a></li>
