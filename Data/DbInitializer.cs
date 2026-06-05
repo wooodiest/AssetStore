@@ -100,6 +100,11 @@ public static class DbInitializer
                     await userManager.AddToRoleAsync(creator, AppRoles.Creator);
                 }
 
+                if (!await userManager.IsInRoleAsync(creator, AppRoles.User))
+                {
+                    await userManager.AddToRoleAsync(creator, AppRoles.User);
+                }
+
                 continue;
             }
 
@@ -120,6 +125,7 @@ public static class DbInitializer
             }
 
             await userManager.AddToRoleAsync(creator, AppRoles.Creator);
+            await userManager.AddToRoleAsync(creator, AppRoles.User);
         }
     }
 
@@ -229,7 +235,7 @@ public static class DbInitializer
     {
         var usersDefaults = new[]
         {
-            new { Email = configuration["Seed:DemoUserEmail1"] ?? "", Password = configuration["Seed:DemoUserPassword1"] ?? "Useruser1@assetstore.local123!" },
+            new { Email = configuration["Seed:DemoUserEmail1"] ?? "user1@assetstore.local", Password = configuration["Seed:DemoUserPassword1"] ?? "User123!" },
             new { Email = configuration["Seed:DemoUserEmail2"] ?? "user2@assetstore.local", Password = configuration["Seed:DemoUserPassword2"] ?? "User123!" },
             new { Email = configuration["Seed:DemoUserEmail3"] ?? "user3@assetstore.local", Password = configuration["Seed:DemoUserPassword3"] ?? "User123!" }
         };
@@ -264,6 +270,11 @@ public static class DbInitializer
             if (await userManager.IsInRoleAsync(user, AppRoles.Administrator))
             {
                 await userManager.RemoveFromRoleAsync(user, AppRoles.Administrator);
+            }
+
+            if (!await userManager.IsInRoleAsync(user, AppRoles.User))
+            {
+                await userManager.AddToRoleAsync(user, AppRoles.User);
             }
 
             demoUsers.Add(user);
