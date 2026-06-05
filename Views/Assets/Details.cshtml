@@ -1,0 +1,11 @@
+@{
+    ViewData["Title"] = "Szczegóły asseta";
+}
+
+<h1>Szczegóły asseta</h1>
+<p class="text-muted">Publiczny widok szczegółów — zakup i pobieranie wymagają logowania.</p>
+
+@if (!User.Identity?.IsAuthenticated ?? true)
+{
+    <div class="alert alert-info">Zaloguj się, aby kupić lub pobrać ten asset.</div>
+}
