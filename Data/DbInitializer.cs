@@ -22,7 +22,7 @@ public static class DbInitializer
 
         await SeedRolesAsync(roleManager, logger);
         await SeedAdminUserAsync(userManager, configuration, logger);
-        await SeedDemoCreatorAsync(userManager, configuration, logger);
+        await SeedDemoCreatorsAsync(userManager, configuration, logger);
         await SeedCategoriesAsync(context, logger);
         await SeedDemoAssetsAsync(context, userManager, configuration, logger);
     }
@@ -77,42 +77,49 @@ public static class DbInitializer
         await userManager.AddToRoleAsync(admin, AppRoles.Administrator);
     }
 
-    private static async Task SeedDemoCreatorAsync(
+    private static async Task SeedDemoCreatorsAsync(
         UserManager<ApplicationUser> userManager,
         IConfiguration configuration,
         ILogger logger)
     {
-        var email = configuration["Seed:DemoCreatorEmail"] ?? "creator@assetstore.local";
-        var password = configuration["Seed:DemoCreatorPassword"] ?? "Creator123!";
-
-        var creator = await userManager.FindByEmailAsync(email);
-        if (creator is not null)
+        var defaults = new[]
         {
-            if (!await userManager.IsInRoleAsync(creator, AppRoles.Creator))
-            {
-                await userManager.AddToRoleAsync(creator, AppRoles.Creator);
-            }
-
-            return;
-        }
-
-        creator = new ApplicationUser
-        {
-            UserName = email,
-            Email = email,
-            EmailConfirmed = true,
-            CreatedAt = DateTime.UtcNow,
-            IsActive = true
+            new { Email = configuration["Seed:DemoCreatorEmail1"] ?? "creator1@assetstore.local", Password = configuration["Seed:DemoCreatorPassword1"] ?? "Creator123!" },
+            new { Email = configuration["Seed:DemoCreatorEmail2"] ?? "creator2@assetstore.local", Password = configuration["Seed:DemoCreatorPassword2"] ?? "Creator123!" },
+            new { Email = configuration["Seed:DemoCreatorEmail3"] ?? "creator3@assetstore.local", Password = configuration["Seed:DemoCreatorPassword3"] ?? "Creator123!" }
         };
 
-        var result = await userManager.CreateAsync(creator, password);
-        if (!result.Succeeded)
+        foreach (var entry in defaults)
         {
-            logger.LogError("Failed to create demo creator: {Errors}", string.Join(", ", result.Errors.Select(e => e.Description)));
-            return;
-        }
+            var creator = await userManager.FindByEmailAsync(entry.Email);
+            if (creator is not null)
+            {
+                if (!await userManager.IsInRoleAsync(creator, AppRoles.Creator))
+                {
+                    await userManager.AddToRoleAsync(creator, AppRoles.Creator);
+                }
 
-        await userManager.AddToRoleAsync(creator, AppRoles.Creator);
+                continue;
+            }
+
+            creator = new ApplicationUser
+            {
+                UserName = entry.Email,
+                Email = entry.Email,
+                EmailConfirmed = true,
+                CreatedAt = DateTime.UtcNow,
+                IsActive = true
+            };
+
+            var result = await userManager.CreateAsync(creator, entry.Password);
+            if (!result.Succeeded)
+            {
+                logger.LogError("Failed to create demo creator {Email}: {Errors}", entry.Email, string.Join(", ", result.Errors.Select(e => e.Description)));
+                continue;
+            }
+
+            await userManager.AddToRoleAsync(creator, AppRoles.Creator);
+        }
     }
 
     private static async Task SeedCategoriesAsync(ApplicationDbContext context, ILogger logger)
@@ -147,13 +154,14 @@ public static class DbInitializer
             return;
         }
 
-        var creatorEmail = configuration["Seed:DemoCreatorEmail"] ?? "creator@assetstore.local";
-        var creator = await userManager.FindByEmailAsync(creatorEmail);
-        if (creator is null)
+        var creators = await userManager.GetUsersInRoleAsync(AppRoles.Creator);
+        if (creators is null || creators.Count == 0)
         {
-            logger.LogWarning("Demo creator not found. Skipping demo asset seed.");
+            logger.LogWarning("No creators found. Skipping demo asset seed.");
             return;
         }
+
+        var selectedCreators = creators.Take(3).ToList();
 
         var categories = await context.Categories.ToListAsync();
         if (categories.Count == 0)
@@ -163,46 +171,53 @@ public static class DbInitializer
 
         var categoryByName = categories.ToDictionary(c => c.Name, c => c.Id);
 
-        var demoAssets = new[]
+        var templates = new[]
         {
-            new Asset
-            {
-                CreatorId = creator.Id,
-                Title = "Low Poly Character Pack",
-                Description = "A set of 5 low-poly characters ready to import into Unity or Unreal.",
-                Price = 0m,
-                CategoryId = categoryByName["3D Models"],
-                FileUrl = "demo/low-poly-characters.zip",
-                UploadDate = DateTime.UtcNow,
-                IsDeleted = false
-            },
-            new Asset
-            {
-                CreatorId = creator.Id,
-                Title = "Forest Ambience Audio",
-                Description = "A forest ambience loop with birds and wind, ideal for adventure games.",
-                Price = 9.99m,
-                CategoryId = categoryByName["Audio"],
-                FileUrl = "demo/forest-ambience.zip",
-                UploadDate = DateTime.UtcNow,
-                IsDeleted = false
-            },
-            new Asset
-            {
-                CreatorId = creator.Id,
-                Title = "PBR Stone Textures",
-                Description = "A pack of 12 2K stone textures with PBR maps.",
-                Price = 4.99m,
-                CategoryId = categoryByName["Textures"],
-                FileUrl = "demo/stone-textures.zip",
-                UploadDate = DateTime.UtcNow,
-                IsDeleted = false
-            }
+            new { Title = "Low Poly Hero Pack", Category = "3D Models", Description = "Set of stylized low-poly hero characters with LODs and game-ready rigs.", Price = 0m, File = "demo/low-poly-hero-pack.zip" },
+            new { Title = "Sci-Fi Interior Kit", Category = "3D Models", Description = "Modular sci-fi interior pieces for fast level assembly.", Price = 12.99m, File = "demo/scifi-interior-kit.zip" },
+            new { Title = "Modular Building Kit", Category = "3D Models", Description = "Modular walls, doors, and windows for urban environments.", Price = 9.49m, File = "demo/modular-building-kit.zip" },
+            new { Title = "Character Animation Pack", Category = "3D Models", Description = "Baked animation clips: walk, run, jump, attack, idle variations.", Price = 7.99m, File = "demo/character-animation-pack.zip" },
+            new { Title = "Weapon Models Pack", Category = "3D Models", Description = "High-quality weapon models with PBR materials.", Price = 14.99m, File = "demo/weapon-models-pack.zip" },
+            new { Title = "PBR Stone Textures 2K", Category = "Textures", Description = "12 stone textures with albedo, normal and roughness maps (2K).", Price = 4.99m, File = "demo/pbr-stone-textures-2k.zip" },
+            new { Title = "Hand-Painted Tileset", Category = "Textures", Description = "Seamless hand-painted tiles for stylized games.", Price = 3.99m, File = "demo/hand-painted-tileset.zip" },
+            new { Title = "Water Shader Pack", Category = "Textures", Description = "Efficient water shader with foam and reflections for URP/HDRP.", Price = 8.99m, File = "demo/water-shader-pack.zip" },
+            new { Title = "Vehicle Textures 4K", Category = "Textures", Description = "4K texture set for vehicles including masks and emissive maps.", Price = 11.50m, File = "demo/vehicle-textures-4k.zip" },
+            new { Title = "Forest Ambience Pack", Category = "Audio", Description = "Long ambience loops with birds, wind and distant water.", Price = 5.99m, File = "demo/forest-ambience-pack.zip" },
+            new { Title = "UI SFX Bundle", Category = "Audio", Description = "Short UI sound effects: clicks, notifications, success/fail.", Price = 2.99m, File = "demo/ui-sfx-bundle.zip" },
+            new { Title = "Orchestral Percussion Kit", Category = "Audio", Description = "Percussion one-shots and loops for cinematic scoring.", Price = 6.49m, File = "demo/orchestral-percussion-kit.zip" },
+            new { Title = "Footstep SFX Collection", Category = "Audio", Description = "Varied footstep samples across surfaces and speeds.", Price = 1.99m, File = "demo/footstep-sfx.zip" },
+            new { Title = "AI Dialogue Manager", Category = "Scripts", Description = "Lightweight dialogue system with branching and localization support.", Price = 9.99m, File = "demo/ai-dialogue-manager.zip" },
+            new { Title = "VR Interaction Utilities", Category = "Scripts", Description = "Common VR interaction scripts: grab, throw, UI pointing.", Price = 7.49m, File = "demo/vr-interaction-utilities.zip" },
+            new { Title = "Procedural Terrain Tools", Category = "Scripts", Description = "Procedural terrain generator and brush-based editors.", Price = 12.00m, File = "demo/procedural-terrain-tools.zip" },
+            new { Title = "HUD & UI Kit", Category = "Other", Description = "Modular HUD elements and UI layouts for games.", Price = 3.50m, File = "demo/hud-ui-kit.zip" },
+            new { Title = "Top-down Tileset", Category = "Other", Description = "Top-down game tileset with animated elements.", Price = 2.99m, File = "demo/topdown-tileset.zip" },
+            new { Title = "Cartoon VFX Pack", Category = "Other", Description = "Particle and sprite VFX for cartoon-style games.", Price = 4.25m, File = "demo/cartoon-vfx-pack.zip" },
+            new { Title = "Optimization Utilities", Category = "Scripts", Description = "Tools for LOD generation and mesh optimization.", Price = 0m, File = "demo/optimization-utilities.zip" }
         };
+
+        var demoAssets = new List<Asset>();
+        for (int i = 0; i < templates.Length; i++)
+        {
+            var tpl = templates[i];
+            var creator = selectedCreators[i % selectedCreators.Count];
+            var categoryId = categoryByName.ContainsKey(tpl.Category) ? categoryByName[tpl.Category] : categories[i % categories.Count].Id;
+
+            demoAssets.Add(new Asset
+            {
+                CreatorId = creator.Id,
+                Title = tpl.Title,
+                Description = tpl.Description,
+                Price = tpl.Price,
+                CategoryId = categoryId,
+                FileUrl = tpl.File,
+                UploadDate = DateTime.UtcNow.AddDays(-i),
+                IsDeleted = false
+            });
+        }
 
         context.Assets.AddRange(demoAssets);
         await context.SaveChangesAsync();
-        logger.LogInformation("Seeded {Count} demo assets.", demoAssets.Length);
+        logger.LogInformation("Seeded {Count} demo assets.", demoAssets.Count);
     }
 }
 
