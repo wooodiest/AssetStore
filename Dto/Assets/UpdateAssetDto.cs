@@ -18,5 +18,9 @@ public class UpdateAssetDto
 
     [Required(ErrorMessage = "Category is required.")]
     public int CategoryId { get; set; }
+
+    public IFormFile? Thumbnail { get; set; }
+
+    public string ExistingThumbnailUrl { get; set; } = string.Empty;
 }
 

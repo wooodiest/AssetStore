@@ -31,7 +31,7 @@ public class AzureBlobStorageService : IFileStorageService
         _containerClient.CreateIfNotExists(PublicAccessType.None);
     }
 
-    public async Task<ServiceResult<string>> SaveFileAsync(IFormFile file, CancellationToken cancellationToken = default)
+    public async Task<ServiceResult<string>> SaveFileAsync(IFormFile file, string? prefix = null, CancellationToken cancellationToken = default)
     {
         if (file.Length == 0)
         {
@@ -49,7 +49,7 @@ public class AzureBlobStorageService : IFileStorageService
             return ServiceResult<string>.Fail("File type is not allowed.", ServiceErrorCode.BadRequest);
         }
 
-        var blobName = $"{Guid.NewGuid():N}{extension}";
+        var blobName = prefix is null ? $"{Guid.NewGuid():N}{extension}" : $"{prefix}/{Guid.NewGuid():N}{extension}";
         var blobClient = _containerClient.GetBlobClient(blobName);
 
         await using var stream = file.OpenReadStream();

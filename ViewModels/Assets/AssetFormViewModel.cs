@@ -28,6 +28,11 @@ public class AssetFormViewModel
     [Display(Name = "File")]
     public IFormFile? File { get; set; }
 
+    [Display(Name = "Thumbnail")]
+    public IFormFile? Thumbnail { get; set; }
+
+    public string ThumbnailUrl { get; set; } = string.Empty;
+
     public IReadOnlyList<CategoryOptionViewModel> Categories { get; init; } = [];
 }
 

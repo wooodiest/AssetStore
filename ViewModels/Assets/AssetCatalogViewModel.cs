@@ -39,6 +39,8 @@ public class AssetListItemViewModel
 
     public DateTime UploadDate { get; init; }
 
+    public string ThumbnailUrl { get; init; } = string.Empty;
+
     public string PriceDisplay => Price == 0 ? "Free" : $"{Price:F2} PLN";
 
     public string ShortDescription => Description.Length > 120

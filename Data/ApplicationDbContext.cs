@@ -51,6 +51,10 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
                 .IsRequired()
                 .HasMaxLength(500);
 
+            entity.Property(a => a.ThumbnailUrl)
+                .IsRequired(false)
+                .HasMaxLength(500);
+
             entity.HasOne(a => a.Creator)
                 .WithMany(u => u.CreatedAssets)
                 .HasForeignKey(a => a.CreatorId)

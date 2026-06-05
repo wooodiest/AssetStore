@@ -22,7 +22,7 @@ public class LocalFileStorageService : IFileStorageService
         _uploadRelativePath = configuration["FileStorage:UploadPath"] ?? "App_Data/Uploads";
     }
 
-    public async Task<ServiceResult<string>> SaveFileAsync(IFormFile file, CancellationToken cancellationToken = default)
+    public async Task<ServiceResult<string>> SaveFileAsync(IFormFile file, string? prefix = null, CancellationToken cancellationToken = default)
     {
         if (file.Length == 0)
         {
@@ -40,7 +40,7 @@ public class LocalFileStorageService : IFileStorageService
             return ServiceResult<string>.Fail("File type is not allowed.", ServiceErrorCode.BadRequest);
         }
 
-        var uploadDirectory = Path.Combine(_environment.ContentRootPath, _uploadRelativePath);
+        var uploadDirectory = Path.Combine(_environment.ContentRootPath, _uploadRelativePath, prefix ?? string.Empty);
         Directory.CreateDirectory(uploadDirectory);
 
         var storedFileName = $"{Guid.NewGuid():N}{extension}";
@@ -49,7 +49,7 @@ public class LocalFileStorageService : IFileStorageService
         await using var stream = new FileStream(fullPath, FileMode.CreateNew, FileAccess.Write, FileShare.None);
         await file.CopyToAsync(stream, cancellationToken);
 
-        var relativePath = Path.Combine(_uploadRelativePath, storedFileName).Replace('\\', '/');
+        var relativePath = Path.Combine(_uploadRelativePath, prefix ?? string.Empty, storedFileName).Replace('\\', '/');
         return ServiceResult<string>.Ok(relativePath);
     }
 

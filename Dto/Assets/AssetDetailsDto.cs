@@ -33,5 +33,7 @@ public class AssetDetailsDto
     public bool CanReview { get; init; }
 
     public bool HasReviewed { get; init; }
+
+    public string ThumbnailUrl { get; init; } = string.Empty;
 }
 

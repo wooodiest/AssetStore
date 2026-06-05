@@ -16,6 +16,8 @@ public class AssetDetailsViewModel
 
     public DateTime UploadDate { get; init; }
 
+    public string ThumbnailUrl { get; init; } = string.Empty;
+
     public double AverageRating { get; init; }
 
     public IReadOnlyList<ReviewItemViewModel> Reviews { get; init; } = [];

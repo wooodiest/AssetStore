@@ -20,6 +20,8 @@ public class Asset
 
     public bool IsDeleted { get; set; }
 
+    public string ThumbnailUrl { get; set; } = string.Empty;
+
     public ApplicationUser Creator { get; set; } = null!;
 
     public Category Category { get; set; } = null!;

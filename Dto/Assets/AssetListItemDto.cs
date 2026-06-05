@@ -15,5 +15,7 @@ public class AssetListItemDto
     public string CreatorName { get; init; } = string.Empty;
 
     public DateTime UploadDate { get; init; }
+
+    public string ThumbnailUrl { get; init; } = string.Empty;
 }
 

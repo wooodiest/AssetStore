@@ -114,6 +114,7 @@ public class AssetService : IAssetService
             CanDownload = isAuthenticated && (isOwner || hasPurchased),
             HasReviewed = hasReviewed,
             CanReview = hasAcquiredForReview && !hasReviewed
+            ,ThumbnailUrl = asset.ThumbnailUrl
         };
     }
 
@@ -139,14 +140,22 @@ public class AssetService : IAssetService
             return ServiceResult<int>.Fail("Asset file is required.", ServiceErrorCode.BadRequest);
         }
 
-        var fileResult = await _fileStorageService.SaveFileAsync(dto.File, cancellationToken);
+        var fileResult = await _fileStorageService.SaveFileAsync(dto.File!, "assets", cancellationToken);
         if (!fileResult.Success || fileResult.Data is null)
         {
             return ServiceResult<int>.Fail(
                 fileResult.ErrorMessage ?? "Failed to save file.",
                 fileResult.ErrorCode);
         }
-
+        string thumbnailUrl = string.Empty;
+        if (dto.Thumbnail is not null)
+        {
+            var thumbResult = await _fileStorageService.SaveFileAsync(dto.Thumbnail, "thumbnails", cancellationToken);
+            if (thumbResult.Success && thumbResult.Data is not null)
+            {
+                thumbnailUrl = thumbResult.Data;
+            }
+        }
         var asset = new Asset
         {
             CreatorId = creatorId,
@@ -155,6 +164,7 @@ public class AssetService : IAssetService
             Price = dto.Price,
             CategoryId = dto.CategoryId,
             FileUrl = fileResult.Data,
+            ThumbnailUrl = thumbnailUrl,
             UploadDate = DateTime.UtcNow,
             IsDeleted = false
         };
@@ -185,6 +195,7 @@ public class AssetService : IAssetService
             Description = asset.Description,
             Price = asset.Price,
             CategoryId = asset.CategoryId
+            ,ExistingThumbnailUrl = asset.ThumbnailUrl
         });
     }
 
@@ -215,6 +226,15 @@ public class AssetService : IAssetService
         asset.Description = dto.Description.Trim();
         asset.Price = dto.Price;
         asset.CategoryId = dto.CategoryId;
+
+        if (dto.Thumbnail is not null)
+        {
+            var thumbResult = await _fileStorageService.SaveFileAsync(dto.Thumbnail, "thumbnails", cancellationToken);
+            if (thumbResult.Success && thumbResult.Data is not null)
+            {
+                asset.ThumbnailUrl = thumbResult.Data;
+            }
+        }
 
         await _assetRepository.UpdateAsync(asset, cancellationToken);
         return ServiceResult.Ok();

@@ -21,5 +21,7 @@ public class CreateAssetDto
 
     [Required(ErrorMessage = "File is required.")]
     public IFormFile? File { get; set; }
+
+    public IFormFile? Thumbnail { get; set; }
 }
 

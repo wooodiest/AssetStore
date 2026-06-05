@@ -18,6 +18,7 @@ public static class AssetMappings
         CategoryName = asset.Category?.Name ?? string.Empty,
         CreatorName = asset.Creator?.Email ?? asset.Creator?.UserName ?? "Unknown",
         UploadDate = asset.UploadDate
+        ,ThumbnailUrl = asset.ThumbnailUrl
     };
 
     public static ReviewItemDto ToReviewItemDto(Review review) => new()
@@ -54,7 +55,8 @@ public static class AssetMappings
             Price = i.Price,
             CategoryName = i.CategoryName,
             CreatorName = i.CreatorName,
-            UploadDate = i.UploadDate
+            UploadDate = i.UploadDate,
+            ThumbnailUrl = i.ThumbnailUrl
         }).ToList(),
         Page = dto.Assets.Page,
         PageSize = dto.Assets.PageSize,
@@ -96,6 +98,7 @@ public static class AssetMappings
         IsOwner = dto.IsOwner,
         CanReview = dto.CanReview,
         HasReviewed = dto.HasReviewed
+        ,ThumbnailUrl = dto.ThumbnailUrl
     };
 
     public static AssetFormViewModel ToCreateViewModel(IReadOnlyList<CategoryOptionDto> categories) => new()
@@ -110,6 +113,7 @@ public static class AssetMappings
         Description = dto.Description,
         Price = dto.Price,
         CategoryId = dto.CategoryId,
+        ThumbnailUrl = dto.ExistingThumbnailUrl,
         Categories = categories.Select(c => new CategoryOptionViewModel { Id = c.Id, Name = c.Name }).ToList()
     };
 

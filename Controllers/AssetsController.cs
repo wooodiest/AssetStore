@@ -31,6 +31,25 @@ public class AssetsController : Controller
     }
 
     [AllowAnonymous]
+    public async Task<IActionResult> Thumbnail(int id, CancellationToken cancellationToken)
+    {
+        var details = await _assetService.GetDetailsAsync(id, null, cancellationToken);
+        if (details is null || string.IsNullOrWhiteSpace(details.ThumbnailUrl))
+        {
+            return NotFound();
+        }
+
+        var fileResult = await _fileStorageService.GetFileAsync(details.ThumbnailUrl, cancellationToken);
+        if (!fileResult.Success || fileResult.Data is null)
+        {
+            return NotFound();
+        }
+
+        var file = fileResult.Data;
+        return File(file.Stream, file.ContentType, file.FileName);
+    }
+
+    [AllowAnonymous]
     public async Task<IActionResult> Index(int page = 1, int? categoryId = null, decimal? maxPrice = null, CancellationToken cancellationToken = default)
     {
         var catalog = await _assetService.GetCatalogAsync(page, DefaultPageSize, categoryId, maxPrice, cancellationToken);
@@ -125,7 +144,8 @@ public class AssetsController : Controller
             Description = model.Description,
             Price = model.Price,
             CategoryId = model.CategoryId,
-            File = model.File
+            File = model.File,
+            Thumbnail = model.Thumbnail
         };
 
         var result = await _assetService.CreateAssetAsync(dto, userId, cancellationToken);
@@ -182,6 +202,7 @@ public class AssetsController : Controller
             Description = model.Description,
             Price = model.Price,
             CategoryId = model.CategoryId
+            ,Thumbnail = model.Thumbnail
         };
 
         var result = await _assetService.UpdateAssetAsync(id, dto, userId, cancellationToken);
