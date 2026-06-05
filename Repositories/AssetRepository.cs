@@ -118,4 +118,9 @@ public class AssetRepository : IAssetRepository
         await _context.SaveChangesAsync(cancellationToken);
         return true;
     }
+
+    public async Task<int> CountActiveAsync(CancellationToken cancellationToken = default)
+    {
+        return await _context.Assets.CountAsync(a => !a.IsDeleted, cancellationToken);
+    }
 }

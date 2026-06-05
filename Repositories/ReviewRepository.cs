@@ -56,4 +56,19 @@ public class ReviewRepository : IReviewRepository
         return await _context.Reviews
             .AnyAsync(r => r.AssetId == assetId && r.UserId == userId, cancellationToken);
     }
+
+    public async Task<IReadOnlyList<Review>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        return await _context.Reviews
+            .AsNoTracking()
+            .Include(r => r.Asset)
+            .Include(r => r.User)
+            .OrderByDescending(r => r.PostedAt)
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<int> CountAsync(CancellationToken cancellationToken = default)
+    {
+        return await _context.Reviews.CountAsync(cancellationToken);
+    }
 }

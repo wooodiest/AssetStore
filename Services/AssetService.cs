@@ -33,6 +33,15 @@ public class AssetService : IAssetService
         _fileStorageService = fileStorageService;
     }
 
+    public async Task<IReadOnlyList<AssetListItemDto>> GetLatestAsync(
+        int count,
+        CancellationToken cancellationToken = default)
+    {
+        count = Math.Clamp(count, 1, 12);
+        var paged = await _assetRepository.GetPagedAsync(1, count, cancellationToken: cancellationToken);
+        return paged.Items.Select(AssetMappings.ToListItemDto).ToList();
+    }
+
     public async Task<AssetCatalogResultDto> GetCatalogAsync(
         int page,
         int pageSize,

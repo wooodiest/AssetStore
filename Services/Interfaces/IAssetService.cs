@@ -6,6 +6,10 @@ namespace AssetStore.Services.Interfaces;
 
 public interface IAssetService
 {
+    Task<IReadOnlyList<AssetListItemDto>> GetLatestAsync(
+        int count,
+        CancellationToken cancellationToken = default);
+
     Task<AssetCatalogResultDto> GetCatalogAsync(
         int page,
         int pageSize,

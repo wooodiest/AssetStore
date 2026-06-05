@@ -1,3 +1,4 @@
+using AssetStore.Dto.Admin;
 using AssetStore.Dto.Reviews;
 using AssetStore.Models;
 using AssetStore.Models.Common;
@@ -99,5 +100,21 @@ public class ReviewService : IReviewService
         }
 
         return ServiceResult.Ok();
+    }
+
+    public async Task<IReadOnlyList<AdminReviewListItemDto>> GetAllForAdminAsync(CancellationToken cancellationToken = default)
+    {
+        var reviews = await _reviewRepository.GetAllAsync(cancellationToken);
+
+        return reviews.Select(r => new AdminReviewListItemDto
+        {
+            Id = r.Id,
+            AssetId = r.AssetId,
+            AssetTitle = r.Asset?.Title ?? "Nieznany asset",
+            UserName = r.User?.Email ?? r.User?.UserName ?? "Anonim",
+            Rating = r.Rating,
+            Comment = r.Comment,
+            PostedAt = r.PostedAt
+        }).ToList();
     }
 }

@@ -1,3 +1,4 @@
+using AssetStore.Dto.Admin;
 using AssetStore.Dto.Reviews;
 using AssetStore.Models.Common;
 
@@ -13,4 +14,6 @@ public interface IReviewService
     Task<ServiceResult> DeleteReviewAsync(
         int reviewId,
         CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyList<AdminReviewListItemDto>> GetAllForAdminAsync(CancellationToken cancellationToken = default);
 }

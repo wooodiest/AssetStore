@@ -25,4 +25,6 @@ public interface IAssetRepository
     Task UpdateAsync(Asset asset, CancellationToken cancellationToken = default);
 
     Task<bool> SoftDeleteAsync(int id, CancellationToken cancellationToken = default);
+
+    Task<int> CountActiveAsync(CancellationToken cancellationToken = default);
 }

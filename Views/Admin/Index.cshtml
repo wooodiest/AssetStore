@@ -1,6 +1,49 @@
+@model AdminDashboardViewModel
 @{
     ViewData["Title"] = "Panel administratora";
 }
 
 <h1>Panel administratora</h1>
-<p>Dostęp tylko dla roli <strong>Administrator</strong>.</p>
+<p class="text-muted">Zarządzanie marketplace Asset Store.</p>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h3>@Model.UserCount</h3>
+                <p class="text-muted mb-0">Użytkowników</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h3>@Model.CategoryCount</h3>
+                <p class="text-muted mb-0">Kategorii</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h3>@Model.AssetCount</h3>
+                <p class="text-muted mb-0">Assetów</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h3>@Model.ReviewCount</h3>
+                <p class="text-muted mb-0">Recenzji</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="list-group">
+    <a asp-action="Categories" class="list-group-item list-group-item-action">Zarządzaj kategoriami</a>
+    <a asp-action="Users" class="list-group-item list-group-item-action">Zarządzaj użytkownikami</a>
+    <a asp-action="Reviews" class="list-group-item list-group-item-action">Moderuj recenzje</a>
+    <a asp-controller="Assets" asp-action="Index" class="list-group-item list-group-item-action">Przejdź do katalogu</a>
+</div>
