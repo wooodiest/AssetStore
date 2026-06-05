@@ -1,4 +1,4 @@
-using AssetStore.Dto.Assets;
+﻿using AssetStore.Dto.Assets;
 using AssetStore.Dto.Categories;
 using AssetStore.Models.Common;
 
@@ -45,3 +45,4 @@ public interface IAssetService
         string userId,
         CancellationToken cancellationToken = default);
 }
+

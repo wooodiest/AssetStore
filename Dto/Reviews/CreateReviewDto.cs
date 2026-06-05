@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace AssetStore.Dto.Reviews;
 
@@ -15,3 +15,4 @@ public class CreateReviewDto
     [StringLength(2000, MinimumLength = 1)]
     public string Comment { get; set; } = string.Empty;
 }
+

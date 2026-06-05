@@ -1,4 +1,4 @@
-using AssetStore.Models;
+﻿using AssetStore.Models;
 using AssetStore.Models.Constants;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -124,11 +124,11 @@ public static class DbInitializer
 
         var categories = new[]
         {
-            new Category { Name = "Modele 3D", Description = "Modele postaci, środowisk i rekwizytów 3D." },
-            new Category { Name = "Tekstury", Description = "Mapy diffuse, normal, roughness i inne tekstury PBR." },
-            new Category { Name = "Audio", Description = "Efekty dźwiękowe, muzyka i sample audio." },
-            new Category { Name = "Skrypty", Description = "Skrypty i narzędzia do silników gier." },
-            new Category { Name = "Inne", Description = "Pozostałe zasoby cyfrowe." }
+            new Category { Name = "3D Models", Description = "3D characters, environments, and props." },
+            new Category { Name = "Textures", Description = "Diffuse, normal, roughness maps, and other PBR textures." },
+            new Category { Name = "Audio", Description = "Sound effects, music, and audio samples." },
+            new Category { Name = "Scripts", Description = "Scripts and tools for game engines." },
+            new Category { Name = "Other", Description = "Other digital assets." }
         };
 
         context.Categories.AddRange(categories);
@@ -169,9 +169,9 @@ public static class DbInitializer
             {
                 CreatorId = creator.Id,
                 Title = "Low Poly Character Pack",
-                Description = "Zestaw 5 postaci low-poly gotowych do importu w Unity lub Unreal.",
+                Description = "A set of 5 low-poly characters ready to import into Unity or Unreal.",
                 Price = 0m,
-                CategoryId = categoryByName["Modele 3D"],
+                CategoryId = categoryByName["3D Models"],
                 FileUrl = "demo/low-poly-characters.zip",
                 UploadDate = DateTime.UtcNow,
                 IsDeleted = false
@@ -180,7 +180,7 @@ public static class DbInitializer
             {
                 CreatorId = creator.Id,
                 Title = "Forest Ambience Audio",
-                Description = "Pętla dźwiękowa lasu z ptakami i wiatrem — idealna do gier przygodowych.",
+                Description = "A forest ambience loop with birds and wind, ideal for adventure games.",
                 Price = 9.99m,
                 CategoryId = categoryByName["Audio"],
                 FileUrl = "demo/forest-ambience.zip",
@@ -191,9 +191,9 @@ public static class DbInitializer
             {
                 CreatorId = creator.Id,
                 Title = "PBR Stone Textures",
-                Description = "Pakiet 12 tekstur kamienia w rozdzielczości 2K z mapami PBR.",
+                Description = "A pack of 12 2K stone textures with PBR maps.",
                 Price = 4.99m,
-                CategoryId = categoryByName["Tekstury"],
+                CategoryId = categoryByName["Textures"],
                 FileUrl = "demo/stone-textures.zip",
                 UploadDate = DateTime.UtcNow,
                 IsDeleted = false
@@ -205,3 +205,4 @@ public static class DbInitializer
         logger.LogInformation("Seeded {Count} demo assets.", demoAssets.Length);
     }
 }
+

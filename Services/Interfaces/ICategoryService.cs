@@ -1,4 +1,4 @@
-using AssetStore.Dto.Categories;
+﻿using AssetStore.Dto.Categories;
 using AssetStore.Models.Common;
 
 namespace AssetStore.Services.Interfaces;
@@ -15,3 +15,4 @@ public interface ICategoryService
 
     Task<ServiceResult> DeleteAsync(int id, CancellationToken cancellationToken = default);
 }
+

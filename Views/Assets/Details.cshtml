@@ -1,4 +1,4 @@
-@model AssetDetailsViewModel
+﻿@model AssetDetailsViewModel
 @{
     ViewData["Title"] = Model.Title;
 }
@@ -7,7 +7,7 @@
     <div class="col-lg-8">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a asp-action="Index">Katalog</a></li>
+                <li class="breadcrumb-item"><a asp-action="Index">Catalog</a></li>
                 <li class="breadcrumb-item active">@Model.Title</li>
             </ol>
         </nav>
@@ -25,7 +25,7 @@
             @if (Model.Reviews.Any())
             {
                 <span class="text-warning">★ @Model.AverageRating.ToString("F1")</span>
-                <span class="text-muted">(@Model.Reviews.Count recenzji)</span>
+                <span class="text-muted">(@Model.Reviews.Count reviews)</span>
             }
         </div>
 
@@ -33,8 +33,8 @@
             @if (Model.ShowLoginPrompt)
             {
                 <div class="alert alert-info w-100 mb-0">
-                    <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Context.Request.Path">Zaloguj się</a>,
-                    aby kupić lub pobrać ten asset.
+                    <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Context.Request.Path">Log in</a>,
+                    to purchase or download this asset.
                 </div>
             }
             else if (Model.CanPurchase)
@@ -46,58 +46,58 @@
             }
             else if (Model.CanDownload)
             {
-                <a asp-action="Download" asp-route-id="@Model.Id" class="btn btn-primary">Pobierz</a>
+                <a asp-action="Download" asp-route-id="@Model.Id" class="btn btn-primary">Download</a>
             }
 
             @if (Model.HasPurchased && !Model.IsOwner)
             {
-                <a asp-controller="Transactions" asp-action="Index" class="btn btn-outline-secondary">Historia transakcji</a>
+                <a asp-controller="Transactions" asp-action="Index" class="btn btn-outline-secondary">Transaction history</a>
             }
 
             @if (Model.IsOwner || User.IsInRole(AppRoles.Administrator))
             {
-                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Edytuj</a>
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Edit</a>
             }
         </div>
 
-        <h4>Recenzje</h4>
+        <h4>Reviews</h4>
 
         @if (Model.CanReview)
         {
             <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">Dodaj recenzję</h5>
+                    <h5 class="card-title">Add Review</h5>
                     <form asp-controller="Reviews" asp-action="Create" method="post">
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="AssetId" value="@Model.Id" />
                         <div class="mb-3">
-                            <label for="rating" class="form-label">Ocena (1–5)</label>
+                            <label for="rating" class="form-label">Rating (1–5)</label>
                             <select class="form-select" id="rating" name="Rating" required>
-                                <option value="5">5 — Doskonały</option>
-                                <option value="4">4 — Bardzo dobry</option>
-                                <option value="3">3 — Dobry</option>
-                                <option value="2">2 — Słaby</option>
-                                <option value="1">1 — Bardzo słaby</option>
+                                <option value="5">5 - Excellent</option>
+                                <option value="4">4 - Very good</option>
+                                <option value="3">3 - Good</option>
+                                <option value="2">2 - Fair</option>
+                                <option value="1">1 - Poor</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="comment" class="form-label">Komentarz</label>
+                            <label for="comment" class="form-label">Comment</label>
                             <textarea class="form-control" id="comment" name="Comment" rows="3" maxlength="2000" required
-                                      placeholder="Opisz swoje wrażenia z tego asseta..."></textarea>
+                                      placeholder="Describe your experience with this asset..."></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Opublikuj recenzję</button>
+                        <button type="submit" class="btn btn-primary">Post Review</button>
                     </form>
                 </div>
             </div>
         }
         else if (Model.HasReviewed)
         {
-            <p class="text-muted">Już dodałeś recenzję do tego asseta.</p>
+            <p class="text-muted">You have already submitted a review for this asset.</p>
         }
 
         @if (!Model.Reviews.Any())
         {
-            <p class="text-muted">Brak recenzji.</p>
+            <p class="text-muted">No reviews yet.</p>
         }
         else
         {
@@ -113,11 +113,11 @@
                             @if (User.IsInRole(AppRoles.Administrator))
                             {
                                 <form asp-controller="Reviews" asp-action="Delete" method="post" class="d-inline"
-                                      onsubmit="return confirm('Usunąć tę recenzję?');">
+                                      onsubmit="return confirm('Delete this review?');">
                                     @Html.AntiForgeryToken()
                                     <input type="hidden" name="id" value="@review.Id" />
                                     <input type="hidden" name="assetId" value="@Model.Id" />
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">Usuń</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                                 </form>
                             }
                         </div>
@@ -129,3 +129,4 @@
         }
     </div>
 </div>
+

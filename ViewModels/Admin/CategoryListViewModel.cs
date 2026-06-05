@@ -1,4 +1,4 @@
-namespace AssetStore.ViewModels.Admin;
+﻿namespace AssetStore.ViewModels.Admin;
 
 public class CategoryListViewModel
 {
@@ -13,3 +13,4 @@ public class CategoryItemViewModel
 
     public string Description { get; init; } = string.Empty;
 }
+

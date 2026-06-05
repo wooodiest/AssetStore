@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using AssetStore.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -46,7 +46,7 @@ public class LoginModel : PageModel
     {
         if (disabled)
         {
-            ErrorMessage = "Twoje konto zostało zablokowane. Skontaktuj się z administratorem.";
+            ErrorMessage = "Your account has been disabled. Please contact the administrator.";
         }
 
         returnUrl ??= Url.Content("~/");
@@ -81,3 +81,4 @@ public class LoginModel : PageModel
         return Page();
     }
 }
+

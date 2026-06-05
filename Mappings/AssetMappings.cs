@@ -1,4 +1,4 @@
-using AssetStore.Dto.Assets;
+﻿using AssetStore.Dto.Assets;
 using AssetStore.Dto.Categories;
 using AssetStore.Dto.Creator;
 using AssetStore.Models;
@@ -127,3 +127,4 @@ public static class AssetMappings
         }).ToList()
     };
 }
+

@@ -1,10 +1,10 @@
-@model AdminUserListViewModel
+﻿@model AdminUserListViewModel
 @{
-    ViewData["Title"] = "Użytkownicy";
+    ViewData["Title"] = "Users";
 }
 
-<h1>Użytkownicy</h1>
-<p class="text-muted">Promocja do roli Creator i blokowanie kont.</p>
+<h1>Users</h1>
+<p class="text-muted">Promote users to Creator role and block accounts.</p>
 
 <div class="table-responsive mt-4">
     <table class="table table-striped align-middle">
@@ -26,11 +26,11 @@
                     <td>
                         @if (user.IsActive)
                         {
-                            <span class="badge bg-success">Aktywny</span>
+                            <span class="badge bg-success">Active</span>
                         }
                         else
                         {
-                            <span class="badge bg-danger">Zablokowany</span>
+                            <span class="badge bg-danger">Blocked</span>
                         }
                     </td>
                     <td>@user.CreatedAt.ToString("yyyy-MM-dd")</td>
@@ -40,17 +40,17 @@
                             <form asp-action="PromoteToCreator" method="post" class="d-inline">
                                 @Html.AntiForgeryToken()
                                 <input type="hidden" name="userId" value="@user.Id" />
-                                <button type="submit" class="btn btn-sm btn-outline-primary">Nadaj Creator</button>
+                                <button type="submit" class="btn btn-sm btn-outline-primary">Promote to Creator</button>
                             </form>
                         }
                         @if (user.IsActive)
                         {
                             <form asp-action="SetUserActive" method="post" class="d-inline"
-                                  onsubmit="return confirm('Zablokować użytkownika @user.Email?');">
+                                  onsubmit="return confirm('Block user @user.Email?');">
                                 @Html.AntiForgeryToken()
                                 <input type="hidden" name="userId" value="@user.Id" />
                                 <input type="hidden" name="isActive" value="false" />
-                                <button type="submit" class="btn btn-sm btn-outline-danger">Zablokuj</button>
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Block</button>
                             </form>
                         }
                         else
@@ -59,7 +59,7 @@
                                 @Html.AntiForgeryToken()
                                 <input type="hidden" name="userId" value="@user.Id" />
                                 <input type="hidden" name="isActive" value="true" />
-                                <button type="submit" class="btn btn-sm btn-outline-success">Odblokuj</button>
+                                <button type="submit" class="btn btn-sm btn-outline-success">Unblock</button>
                             </form>
                         }
                     </td>
@@ -70,5 +70,6 @@
 </div>
 
 <p class="mt-3">
-    <a asp-action="Index" class="btn btn-outline-secondary">← Panel admina</a>
+    <a asp-action="Index" class="btn btn-outline-secondary">← Admin dashboard</a>
 </p>
+

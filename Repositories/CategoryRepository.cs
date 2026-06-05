@@ -1,4 +1,4 @@
-using AssetStore.Data;
+﻿using AssetStore.Data;
 using AssetStore.Models;
 using AssetStore.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -61,3 +61,4 @@ public class CategoryRepository : ICategoryRepository
         return true;
     }
 }
+

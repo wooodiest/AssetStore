@@ -1,4 +1,4 @@
-using AssetStore.Dto.Categories;
+﻿using AssetStore.Dto.Categories;
 using AssetStore.Models.Common;
 
 namespace AssetStore.Dto.Assets;
@@ -13,3 +13,4 @@ public class AssetCatalogResultDto
 
     public decimal? SelectedMaxPrice { get; init; }
 }
+

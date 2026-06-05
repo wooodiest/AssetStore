@@ -1,4 +1,4 @@
-namespace AssetStore.Models;
+﻿namespace AssetStore.Models;
 
 public class Transaction
 {
@@ -16,3 +16,4 @@ public class Transaction
 
     public ApplicationUser User { get; set; } = null!;
 }
+

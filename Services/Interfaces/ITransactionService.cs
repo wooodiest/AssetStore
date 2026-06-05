@@ -1,4 +1,4 @@
-using AssetStore.Dto.Transactions;
+﻿using AssetStore.Dto.Transactions;
 
 namespace AssetStore.Services.Interfaces;
 
@@ -8,3 +8,4 @@ public interface ITransactionService
         string userId,
         CancellationToken cancellationToken = default);
 }
+

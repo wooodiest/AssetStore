@@ -1,4 +1,4 @@
-namespace AssetStore.Dto.Purchase;
+﻿namespace AssetStore.Dto.Purchase;
 
 public class PurchaseResultDto
 {
@@ -8,3 +8,4 @@ public class PurchaseResultDto
 
     public bool AlreadyOwned { get; init; }
 }
+

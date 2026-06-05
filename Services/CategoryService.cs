@@ -1,4 +1,4 @@
-using AssetStore.Dto.Categories;
+﻿using AssetStore.Dto.Categories;
 using AssetStore.Models;
 using AssetStore.Models.Common;
 using AssetStore.Repositories.Interfaces;
@@ -44,7 +44,7 @@ public class CategoryService : ICategoryService
         var category = await _categoryRepository.GetByIdAsync(id, cancellationToken);
         if (category is null)
         {
-            return ServiceResult.Fail("Kategoria nie została znaleziona.", ServiceErrorCode.NotFound);
+            return ServiceResult.Fail("Category not found.", ServiceErrorCode.NotFound);
         }
 
         category.Name = dto.Name.Trim();
@@ -59,7 +59,7 @@ public class CategoryService : ICategoryService
         if (!deleted)
         {
             return ServiceResult.Fail(
-                "Nie można usunąć kategorii — istnieją przypisane assety lub kategoria nie istnieje.",
+                "Cannot delete category - either it has assigned assets or it does not exist.",
                 ServiceErrorCode.BadRequest);
         }
 
@@ -73,3 +73,4 @@ public class CategoryService : ICategoryService
         Description = category.Description
     };
 }
+

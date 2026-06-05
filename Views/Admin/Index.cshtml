@@ -1,17 +1,17 @@
-@model AdminDashboardViewModel
+﻿@model AdminDashboardViewModel
 @{
-    ViewData["Title"] = "Panel administratora";
+    ViewData["Title"] = "Admin Dashboard";
 }
 
-<h1>Panel administratora</h1>
-<p class="text-muted">Zarządzanie marketplace Asset Store.</p>
+<h1>Admin Dashboard</h1>
+<p class="text-muted">Manage the Asset Store marketplace.</p>
 
 <div class="row g-3 mb-4">
     <div class="col-md-3">
         <div class="card text-center shadow-sm">
             <div class="card-body">
                 <h3>@Model.UserCount</h3>
-                <p class="text-muted mb-0">Użytkowników</p>
+                <p class="text-muted mb-0">Users</p>
             </div>
         </div>
     </div>
@@ -19,7 +19,7 @@
         <div class="card text-center shadow-sm">
             <div class="card-body">
                 <h3>@Model.CategoryCount</h3>
-                <p class="text-muted mb-0">Kategorii</p>
+                <p class="text-muted mb-0">Categories</p>
             </div>
         </div>
     </div>
@@ -27,7 +27,7 @@
         <div class="card text-center shadow-sm">
             <div class="card-body">
                 <h3>@Model.AssetCount</h3>
-                <p class="text-muted mb-0">Assetów</p>
+                <p class="text-muted mb-0">Assets</p>
             </div>
         </div>
     </div>
@@ -35,15 +35,15 @@
         <div class="card text-center shadow-sm">
             <div class="card-body">
                 <h3>@Model.ReviewCount</h3>
-                <p class="text-muted mb-0">Recenzji</p>
+                <p class="text-muted mb-0">Reviews</p>
             </div>
         </div>
     </div>
 </div>
 
 <div class="list-group">
-    <a asp-action="Categories" class="list-group-item list-group-item-action">Zarządzaj kategoriami</a>
-    <a asp-action="Users" class="list-group-item list-group-item-action">Zarządzaj użytkownikami</a>
-    <a asp-action="Reviews" class="list-group-item list-group-item-action">Moderuj recenzje</a>
-    <a asp-controller="Assets" asp-action="Index" class="list-group-item list-group-item-action">Przejdź do katalogu</a>
-</div>
+        <a asp-action="Categories" class="list-group-item list-group-item-action">Manage categories</a>
+        <a asp-action="Users" class="list-group-item list-group-item-action">Manage users</a>
+        <a asp-action="Reviews" class="list-group-item list-group-item-action">Moderate reviews</a>
+        <a asp-controller="Assets" asp-action="Index" class="list-group-item list-group-item-action">Go to catalog</a>
+

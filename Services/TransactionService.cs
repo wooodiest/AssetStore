@@ -1,4 +1,4 @@
-using AssetStore.Dto.Transactions;
+﻿using AssetStore.Dto.Transactions;
 using AssetStore.Repositories.Interfaces;
 using AssetStore.Services.Interfaces;
 
@@ -23,10 +23,11 @@ public class TransactionService : ITransactionService
         {
             Id = t.Id,
             AssetId = t.AssetId,
-            AssetTitle = t.Asset?.Title ?? "Nieznany asset",
+            AssetTitle = t.Asset?.Title ?? "Unknown asset",
             CategoryName = t.Asset?.Category?.Name ?? string.Empty,
             Amount = t.Amount,
             PurchaseDate = t.PurchaseDate
         }).ToList();
     }
 }
+

@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace AssetStore.Dto.Assets;
 
@@ -22,3 +22,4 @@ public class CreateAssetDto
     [Required(ErrorMessage = "File is required.")]
     public IFormFile? File { get; set; }
 }
+

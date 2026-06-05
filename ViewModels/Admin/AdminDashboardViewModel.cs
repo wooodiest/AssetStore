@@ -1,4 +1,4 @@
-namespace AssetStore.ViewModels.Admin;
+﻿namespace AssetStore.ViewModels.Admin;
 
 public class AdminDashboardViewModel
 {
@@ -10,3 +10,4 @@ public class AdminDashboardViewModel
 
     public int ReviewCount { get; init; }
 }
+

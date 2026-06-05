@@ -1,4 +1,4 @@
-namespace AssetStore.Dto.Admin;
+﻿namespace AssetStore.Dto.Admin;
 
 public class AdminDashboardDto
 {
@@ -10,3 +10,4 @@ public class AdminDashboardDto
 
     public int ReviewCount { get; init; }
 }
+

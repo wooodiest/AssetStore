@@ -1,9 +1,9 @@
-@model CategoryFormViewModel
+﻿@model CategoryFormViewModel
 @{
-    ViewData["Title"] = "Dodaj kategorię";
+    ViewData["Title"] = "Add Category";
 }
 
-<h1>Dodaj kategorię</h1>
+<h1>Add Category</h1>
 
 <form asp-action="CreateCategory" method="post" class="mt-4 col-md-6">
     <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
@@ -20,10 +20,11 @@
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Utwórz</button>
-    <a asp-action="Categories" class="btn btn-outline-secondary">Anuluj</a>
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="Categories" class="btn btn-outline-secondary">Cancel</a>
 </form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+

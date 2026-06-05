@@ -1,4 +1,4 @@
-namespace AssetStore.ViewModels.Admin;
+﻿namespace AssetStore.ViewModels.Admin;
 
 public class AdminUserListViewModel
 {
@@ -19,3 +19,4 @@ public class AdminUserItemViewModel
 
     public bool CanPromoteToCreator { get; init; }
 }
+

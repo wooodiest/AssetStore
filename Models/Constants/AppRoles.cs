@@ -1,4 +1,4 @@
-namespace AssetStore.Models.Constants;
+﻿namespace AssetStore.Models.Constants;
 
 public static class AppRoles
 {
@@ -10,3 +10,4 @@ public static class AppRoles
 
     public static readonly string[] All = [Administrator, Creator, User];
 }
+

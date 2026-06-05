@@ -1,16 +1,16 @@
-@model TransactionHistoryViewModel
+﻿@model TransactionHistoryViewModel
 @{
-    ViewData["Title"] = "Historia transakcji";
+    ViewData["Title"] = "Transaction History";
 }
 
-<h1>Historia transakcji</h1>
-<p class="text-muted">Lista assetów, które nabyłeś lub pobrałeś za darmo.</p>
+<h1>Transaction History</h1>
+<p class="text-muted">List of assets you purchased or downloaded for free.</p>
 
 @if (!Model.Items.Any())
 {
     <div class="alert alert-info mt-4">
-        Nie masz jeszcze żadnych transakcji.
-        <a asp-controller="Assets" asp-action="Index">Przeglądaj katalog</a>.
+        You don't have any transactions yet.
+        <a asp-controller="Assets" asp-action="Index">Browse the catalog</a>.
     </div>
 }
 else
@@ -20,9 +20,9 @@ else
             <thead>
                 <tr>
                     <th>Asset</th>
-                    <th>Kategoria</th>
-                    <th>Kwota</th>
-                    <th>Data</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Date</th>
                     <th></th>
                 </tr>
             </thead>
@@ -36,9 +36,9 @@ else
                         <td>@item.PurchaseDate.ToString("yyyy-MM-dd HH:mm")</td>
                         <td class="text-end">
                             <a asp-controller="Assets" asp-action="Details" asp-route-id="@item.AssetId"
-                               class="btn btn-sm btn-outline-primary">Szczegóły</a>
+                               class="btn btn-sm btn-outline-primary">Details</a>
                             <a asp-controller="Assets" asp-action="Download" asp-route-id="@item.AssetId"
-                               class="btn btn-sm btn-primary">Pobierz</a>
+                               class="btn btn-sm btn-primary">Download</a>
                         </td>
                     </tr>
                 }
@@ -46,3 +46,4 @@ else
         </table>
     </div>
 }
+

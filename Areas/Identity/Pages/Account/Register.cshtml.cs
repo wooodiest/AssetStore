@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using AssetStore.Models;
 using AssetStore.Models.Constants;
 using Microsoft.AspNetCore.Identity;
@@ -103,3 +103,4 @@ public class RegisterModel : PageModel
         return LocalRedirect(returnUrl);
     }
 }
+

@@ -1,4 +1,4 @@
-# Project Documentation: Asset Store
+﻿# Project Documentation: Asset Store
 
 ## 1. Project Overview
 
@@ -78,3 +78,4 @@ To maximize the project grade and utilize modern deployment practices, the appli
 - The application backend and frontend will be deployed using **Azure App Service**.
 - The SQL database will be hosted on **Azure SQL Database**.
 - Heavy binary files (e.g., .zip archives containing 3D models, high-resolution textures) will NOT be stored in the relational database. Instead, they will be uploaded securely to **Azure Blob Storage**, and the database will only store the reference URL.
+

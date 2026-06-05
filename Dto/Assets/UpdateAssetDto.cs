@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace AssetStore.Dto.Assets;
 
@@ -19,3 +19,4 @@ public class UpdateAssetDto
     [Required(ErrorMessage = "Category is required.")]
     public int CategoryId { get; set; }
 }
+

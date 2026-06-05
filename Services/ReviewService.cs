@@ -1,4 +1,4 @@
-using AssetStore.Dto.Admin;
+﻿using AssetStore.Dto.Admin;
 using AssetStore.Dto.Reviews;
 using AssetStore.Models;
 using AssetStore.Models.Common;
@@ -31,34 +31,34 @@ public class ReviewService : IReviewService
         if (dto.Rating is < 1 or > 5)
         {
             return ServiceResult<ReviewResponseDto>.Fail(
-                "Ocena musi być w zakresie od 1 do 5.",
+                "Rating must be between 1 and 5.",
                 ServiceErrorCode.BadRequest);
         }
 
         var asset = await _assetRepository.GetByIdAsync(dto.AssetId, cancellationToken);
         if (asset is null)
         {
-            return ServiceResult<ReviewResponseDto>.Fail("Asset nie został znaleziony.", ServiceErrorCode.NotFound);
+            return ServiceResult<ReviewResponseDto>.Fail("Asset not found.", ServiceErrorCode.NotFound);
         }
 
         if (asset.CreatorId == userId)
         {
             return ServiceResult<ReviewResponseDto>.Fail(
-                "Nie możesz ocenić własnego asseta.",
+                "You cannot review your own asset.",
                 ServiceErrorCode.Forbidden);
         }
 
         if (!await _transactionRepository.HasPurchasedAsync(userId, dto.AssetId, cancellationToken))
         {
             return ServiceResult<ReviewResponseDto>.Fail(
-                "Musisz najpierw nabyć ten asset, aby dodać recenzję.",
+                "You must purchase this asset before reviewing it.",
                 ServiceErrorCode.Forbidden);
         }
 
         if (await _reviewRepository.ExistsAsync(dto.AssetId, userId, cancellationToken))
         {
             return ServiceResult<ReviewResponseDto>.Fail(
-                "Już dodałeś recenzję do tego asseta.",
+                "You have already reviewed this asset.",
                 ServiceErrorCode.Conflict);
         }
 
@@ -90,13 +90,13 @@ public class ReviewService : IReviewService
         var review = await _reviewRepository.GetByIdAsync(reviewId, cancellationToken);
         if (review is null)
         {
-            return ServiceResult.Fail("Recenzja nie została znaleziona.", ServiceErrorCode.NotFound);
+            return ServiceResult.Fail("Review not found.", ServiceErrorCode.NotFound);
         }
 
         var deleted = await _reviewRepository.DeleteAsync(reviewId, cancellationToken);
         if (!deleted)
         {
-            return ServiceResult.Fail("Nie udało się usunąć recenzji.", ServiceErrorCode.BadRequest);
+            return ServiceResult.Fail("Failed to delete review.", ServiceErrorCode.BadRequest);
         }
 
         return ServiceResult.Ok();
@@ -110,11 +110,12 @@ public class ReviewService : IReviewService
         {
             Id = r.Id,
             AssetId = r.AssetId,
-            AssetTitle = r.Asset?.Title ?? "Nieznany asset",
-            UserName = r.User?.Email ?? r.User?.UserName ?? "Anonim",
+            AssetTitle = r.Asset?.Title ?? "Unknown asset",
+            UserName = r.User?.Email ?? r.User?.UserName ?? "Anonymous",
             Rating = r.Rating,
             Comment = r.Comment,
             PostedAt = r.PostedAt
         }).ToList();
     }
 }
+

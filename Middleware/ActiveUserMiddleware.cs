@@ -1,4 +1,4 @@
-using AssetStore.Models;
+﻿using AssetStore.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace AssetStore.Middleware;
@@ -31,3 +31,4 @@ public class ActiveUserMiddleware
         await _next(context);
     }
 }
+

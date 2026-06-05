@@ -1,4 +1,4 @@
-using AssetStore.Mappings;
+﻿using AssetStore.Mappings;
 using AssetStore.Models;
 using AssetStore.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -36,3 +36,4 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
+

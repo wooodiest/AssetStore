@@ -1,4 +1,4 @@
-using AssetStore.Models.Common;
+﻿using AssetStore.Models.Common;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AssetStore.Extensions;
@@ -38,3 +38,4 @@ public static class ServiceResultExtensions
         };
     }
 }
+

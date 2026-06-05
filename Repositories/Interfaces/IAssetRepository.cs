@@ -1,4 +1,4 @@
-using AssetStore.Models;
+﻿using AssetStore.Models;
 using AssetStore.Models.Common;
 
 namespace AssetStore.Repositories.Interfaces;
@@ -28,3 +28,4 @@ public interface IAssetRepository
 
     Task<int> CountActiveAsync(CancellationToken cancellationToken = default);
 }
+

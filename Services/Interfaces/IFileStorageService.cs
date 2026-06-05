@@ -1,4 +1,4 @@
-using AssetStore.Dto.Files;
+﻿using AssetStore.Dto.Files;
 using AssetStore.Models.Common;
 
 namespace AssetStore.Services.Interfaces;
@@ -9,3 +9,4 @@ public interface IFileStorageService
 
     Task<ServiceResult<FileDownloadDto>> GetFileAsync(string fileUrl, CancellationToken cancellationToken = default);
 }
+

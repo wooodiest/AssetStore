@@ -504,3 +504,4 @@ namespace AssetStore.Data.Migrations
         }
     }
 }
+

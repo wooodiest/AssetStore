@@ -1,4 +1,4 @@
-using AssetStore.Models;
+﻿using AssetStore.Models;
 
 namespace AssetStore.Repositories.Interfaces;
 
@@ -18,3 +18,4 @@ public interface IReviewRepository
 
     Task<int> CountAsync(CancellationToken cancellationToken = default);
 }
+

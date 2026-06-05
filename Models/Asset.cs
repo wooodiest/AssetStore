@@ -1,4 +1,4 @@
-namespace AssetStore.Models;
+﻿namespace AssetStore.Models;
 
 public class Asset
 {
@@ -28,3 +28,4 @@ public class Asset
 
     public ICollection<Transaction> Transactions { get; set; } = [];
 }
+

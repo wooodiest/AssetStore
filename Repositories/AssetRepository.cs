@@ -1,4 +1,4 @@
-using AssetStore.Data;
+﻿using AssetStore.Data;
 using AssetStore.Models;
 using AssetStore.Models.Common;
 using AssetStore.Repositories.Interfaces;
@@ -124,3 +124,4 @@ public class AssetRepository : IAssetRepository
         return await _context.Assets.CountAsync(a => !a.IsDeleted, cancellationToken);
     }
 }
+

@@ -1,4 +1,4 @@
-namespace AssetStore.Dto.Admin;
+﻿namespace AssetStore.Dto.Admin;
 
 public class AdminUserListItemDto
 {
@@ -14,3 +14,4 @@ public class AdminUserListItemDto
 
     public bool CanPromoteToCreator { get; init; }
 }
+

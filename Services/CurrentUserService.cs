@@ -1,4 +1,4 @@
-using AssetStore.Models;
+﻿using AssetStore.Models;
 using AssetStore.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
@@ -52,3 +52,4 @@ public class CurrentUserService : ICurrentUserService
         return await _userManager.GetUserAsync(principal);
     }
 }
+

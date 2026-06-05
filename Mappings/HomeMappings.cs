@@ -1,4 +1,4 @@
-using AssetStore.Dto.Assets;
+﻿using AssetStore.Dto.Assets;
 using AssetStore.ViewModels.Home;
 
 namespace AssetStore.Mappings;
@@ -16,3 +16,4 @@ public static class HomeMappings
         }).ToList()
     };
 }
+

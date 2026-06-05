@@ -1,4 +1,4 @@
-namespace AssetStore.ViewModels.Transactions;
+﻿namespace AssetStore.ViewModels.Transactions;
 
 public class TransactionHistoryViewModel
 {
@@ -19,5 +19,6 @@ public class TransactionItemViewModel
 
     public DateTime PurchaseDate { get; init; }
 
-    public string AmountDisplay => Amount == 0 ? "Darmowy" : $"{Amount:F2} PLN";
+    public string AmountDisplay => Amount == 0 ? "Free" : $"{Amount:F2} PLN";
 }
+

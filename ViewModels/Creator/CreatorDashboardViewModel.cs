@@ -1,4 +1,4 @@
-namespace AssetStore.ViewModels.Creator;
+﻿namespace AssetStore.ViewModels.Creator;
 
 public class CreatorDashboardViewModel
 {
@@ -21,5 +21,6 @@ public class CreatorAssetItemViewModel
 
     public DateTime UploadDate { get; init; }
 
-    public string PriceDisplay => Price == 0 ? "Darmowy" : $"{Price:F2} PLN";
+    public string PriceDisplay => Price == 0 ? "Free" : $"{Price:F2} PLN";
 }
+

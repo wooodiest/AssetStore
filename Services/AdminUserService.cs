@@ -1,4 +1,4 @@
-using AssetStore.Dto.Admin;
+﻿using AssetStore.Dto.Admin;
 using AssetStore.Models;
 using AssetStore.Models.Common;
 using AssetStore.Models.Constants;
@@ -50,22 +50,22 @@ public class AdminUserService : IAdminUserService
         var user = await _userManager.FindByIdAsync(userId);
         if (user is null)
         {
-            return ServiceResult.Fail("Użytkownik nie został znaleziony.", ServiceErrorCode.NotFound);
+            return ServiceResult.Fail("User not found.", ServiceErrorCode.NotFound);
         }
 
         if (!user.IsActive)
         {
-            return ServiceResult.Fail("Nie można promować zablokowanego użytkownika.", ServiceErrorCode.BadRequest);
+            return ServiceResult.Fail("Cannot promote a blocked user.", ServiceErrorCode.BadRequest);
         }
 
         if (await _userManager.IsInRoleAsync(user, AppRoles.Creator))
         {
-            return ServiceResult.Fail("Użytkownik ma już rolę Creator.", ServiceErrorCode.Conflict);
+            return ServiceResult.Fail("User already has Creator role.", ServiceErrorCode.Conflict);
         }
 
         if (await _userManager.IsInRoleAsync(user, AppRoles.Administrator))
         {
-            return ServiceResult.Fail("Administrator nie wymaga promocji.", ServiceErrorCode.BadRequest);
+            return ServiceResult.Fail("Administrator does not require promotion.", ServiceErrorCode.BadRequest);
         }
 
         var result = await _userManager.AddToRoleAsync(user, AppRoles.Creator);
@@ -82,12 +82,12 @@ public class AdminUserService : IAdminUserService
         var user = await _userManager.FindByIdAsync(userId);
         if (user is null)
         {
-            return ServiceResult.Fail("Użytkownik nie został znaleziony.", ServiceErrorCode.NotFound);
+            return ServiceResult.Fail("User not found.", ServiceErrorCode.NotFound);
         }
 
         if (await _userManager.IsInRoleAsync(user, AppRoles.Administrator))
         {
-            return ServiceResult.Fail("Nie można zablokować administratora.", ServiceErrorCode.Forbidden);
+            return ServiceResult.Fail("Cannot block an administrator.", ServiceErrorCode.Forbidden);
         }
 
         user.IsActive = isActive;
@@ -100,3 +100,4 @@ public class AdminUserService : IAdminUserService
         return ServiceResult.Ok();
     }
 }
+

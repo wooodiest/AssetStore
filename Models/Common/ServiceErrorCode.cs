@@ -1,4 +1,4 @@
-namespace AssetStore.Models.Common;
+﻿namespace AssetStore.Models.Common;
 
 public enum ServiceErrorCode
 {
@@ -8,3 +8,4 @@ public enum ServiceErrorCode
     BadRequest,
     Conflict
 }
+

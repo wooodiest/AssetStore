@@ -1,4 +1,4 @@
-using AssetStore.Dto.Categories;
+﻿using AssetStore.Dto.Categories;
 using AssetStore.Mappings;
 using AssetStore.Models.Constants;
 using AssetStore.Services.Interfaces;
@@ -67,7 +67,7 @@ public class AdminController : Controller
             return View(model);
         }
 
-        TempData["Success"] = "Kategoria została utworzona.";
+        TempData["Success"] = "Category created.";
         return RedirectToAction(nameof(Categories));
     }
 
@@ -106,7 +106,7 @@ public class AdminController : Controller
             return View(model);
         }
 
-        TempData["Success"] = "Kategoria została zaktualizowana.";
+        TempData["Success"] = "Category updated.";
         return RedirectToAction(nameof(Categories));
     }
 
@@ -116,7 +116,7 @@ public class AdminController : Controller
     {
         var result = await _categoryService.DeleteAsync(id, cancellationToken);
         TempData[result.Success ? "Success" : "Error"] = result.Success
-            ? "Kategoria została usunięta."
+            ? "Category deleted."
             : result.ErrorMessage;
 
         return RedirectToAction(nameof(Categories));
@@ -134,7 +134,7 @@ public class AdminController : Controller
     {
         var result = await _adminUserService.PromoteToCreatorAsync(userId, cancellationToken);
         TempData[result.Success ? "Success" : "Error"] = result.Success
-            ? "Użytkownik otrzymał rolę Creator."
+            ? "User was promoted to Creator."
             : result.ErrorMessage;
 
         return RedirectToAction(nameof(Users));
@@ -146,7 +146,7 @@ public class AdminController : Controller
     {
         var result = await _adminUserService.SetUserActiveAsync(userId, isActive, cancellationToken);
         TempData[result.Success ? "Success" : "Error"] = result.Success
-            ? (isActive ? "Użytkownik został odblokowany." : "Użytkownik został zablokowany.")
+            ? (isActive ? "User has been unblocked." : "User has been blocked.")
             : result.ErrorMessage;
 
         return RedirectToAction(nameof(Users));
@@ -164,9 +164,10 @@ public class AdminController : Controller
     {
         var result = await _reviewService.DeleteReviewAsync(id, cancellationToken);
         TempData[result.Success ? "Success" : "Error"] = result.Success
-            ? "Recenzja została usunięta."
+            ? "Review has been deleted."
             : result.ErrorMessage;
 
         return RedirectToAction(nameof(Reviews));
     }
 }
+

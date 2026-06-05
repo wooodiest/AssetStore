@@ -1,4 +1,4 @@
-using AssetStore.Models.Constants;
+﻿using AssetStore.Models.Constants;
 using AssetStore.Repositories.Interfaces;
 using AssetStore.Services.Interfaces;
 
@@ -45,3 +45,4 @@ public class AssetAuthorizationService : IAssetAuthorizationService
         return isAdministrator || currentUserId == assetCreatorId;
     }
 }
+

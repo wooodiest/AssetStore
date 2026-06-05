@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace AssetStore.Models;
 
@@ -14,3 +14,4 @@ public class ApplicationUser : IdentityUser
 
     public ICollection<Transaction> Transactions { get; set; } = [];
 }
+

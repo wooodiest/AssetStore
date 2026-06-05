@@ -1,4 +1,4 @@
-using AssetStore.Dto.Files;
+﻿using AssetStore.Dto.Files;
 using AssetStore.Models.Common;
 using AssetStore.Services.Interfaces;
 
@@ -87,3 +87,4 @@ public class LocalFileStorageService : IFileStorageService
         }));
     }
 }
+

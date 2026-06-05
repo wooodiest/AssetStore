@@ -1,4 +1,4 @@
-using AssetStore.Dto.Admin;
+﻿using AssetStore.Dto.Admin;
 using AssetStore.Dto.Reviews;
 using AssetStore.Models.Common;
 
@@ -17,3 +17,4 @@ public interface IReviewService
 
     Task<IReadOnlyList<AdminReviewListItemDto>> GetAllForAdminAsync(CancellationToken cancellationToken = default);
 }
+

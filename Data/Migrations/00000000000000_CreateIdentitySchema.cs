@@ -218,3 +218,4 @@ namespace AssetStore.Data.Migrations
         }
     }
 }
+

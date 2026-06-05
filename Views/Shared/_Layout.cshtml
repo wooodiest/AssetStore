@@ -1,6 +1,6 @@
 ﻿@using AssetStore.Models.Constants
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,24 +21,24 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Strona główna</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Assets" asp-action="Index">Katalog</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Assets" asp-action="Index">Catalog</a>
                         </li>
                         @if (User.IsInRole(AppRoles.Creator))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Creator" asp-action="Index">Moje assety</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Creator" asp-action="Index">My Assets</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Assets" asp-action="Create">Dodaj asset</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Assets" asp-action="Create">Add Asset</a>
                             </li>
                         }
                         @if (User.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Transactions" asp-action="Index">Transakcje</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Transactions" asp-action="Index">Transactions</a>
                             </li>
                         }
                         @if (User.IsInRole(AppRoles.Administrator))
@@ -48,9 +48,9 @@
                                    data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
                                 <ul class="dropdown-menu" aria-labelledby="adminDropdown">
                                     <li><a class="dropdown-item" asp-controller="Admin" asp-action="Index">Dashboard</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Categories">Kategorie</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Users">Użytkownicy</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Reviews">Recenzje</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Categories">Categories</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Users">Users</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Reviews">Reviews</a></li>
                                 </ul>
                             </li>
                         }
@@ -91,3 +91,4 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+

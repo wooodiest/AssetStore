@@ -1,4 +1,4 @@
-namespace AssetStore.Models;
+﻿namespace AssetStore.Models;
 
 public class Category
 {
@@ -10,3 +10,4 @@ public class Category
 
     public ICollection<Asset> Assets { get; set; } = [];
 }
+

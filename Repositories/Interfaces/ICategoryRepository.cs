@@ -1,4 +1,4 @@
-using AssetStore.Models;
+﻿using AssetStore.Models;
 
 namespace AssetStore.Repositories.Interfaces;
 
@@ -14,3 +14,4 @@ public interface ICategoryRepository
 
     Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default);
 }
+

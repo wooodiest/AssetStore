@@ -1,4 +1,4 @@
-namespace AssetStore.Dto.Assets;
+﻿namespace AssetStore.Dto.Assets;
 
 public class AssetListItemDto
 {
@@ -16,3 +16,4 @@ public class AssetListItemDto
 
     public DateTime UploadDate { get; init; }
 }
+

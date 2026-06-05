@@ -1,4 +1,4 @@
-using AssetStore.Data;
+﻿using AssetStore.Data;
 using AssetStore.Middleware;
 using AssetStore.Models;
 using AssetStore.Repositories;
@@ -76,3 +76,4 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+

@@ -1,4 +1,4 @@
-namespace AssetStore.Services.Interfaces;
+﻿namespace AssetStore.Services.Interfaces;
 
 public interface ICurrentUserService
 {
@@ -8,3 +8,4 @@ public interface ICurrentUserService
 
     Task<bool> IsAuthenticatedAsync();
 }
+

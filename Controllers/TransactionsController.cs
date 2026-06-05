@@ -1,4 +1,4 @@
-using AssetStore.Mappings;
+﻿using AssetStore.Mappings;
 using AssetStore.Services.Interfaces;
 using AssetStore.ViewModels.Transactions;
 using Microsoft.AspNetCore.Authorization;
@@ -32,3 +32,4 @@ public class TransactionsController : Controller
         return View(TransactionMappings.ToViewModel(history));
     }
 }
+

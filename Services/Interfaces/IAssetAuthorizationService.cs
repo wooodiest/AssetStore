@@ -1,4 +1,4 @@
-namespace AssetStore.Services.Interfaces;
+﻿namespace AssetStore.Services.Interfaces;
 
 public interface IAssetAuthorizationService
 {
@@ -6,3 +6,4 @@ public interface IAssetAuthorizationService
 
     bool CanModifyAsset(string? currentUserId, string assetCreatorId, bool isAdministrator);
 }
+

@@ -1,4 +1,4 @@
-using AssetStore.Dto.Creator;
+﻿using AssetStore.Dto.Creator;
 using AssetStore.Mappings;
 using AssetStore.Repositories.Interfaces;
 using AssetStore.Services.Interfaces;
@@ -31,3 +31,4 @@ public class CreatorDashboardService : ICreatorDashboardService
         };
     }
 }
+

@@ -1,4 +1,4 @@
-namespace AssetStore.Dto.Reviews;
+﻿namespace AssetStore.Dto.Reviews;
 
 public class ReviewResponseDto
 {
@@ -12,3 +12,4 @@ public class ReviewResponseDto
 
     public DateTime PostedAt { get; init; }
 }
+

@@ -1,4 +1,4 @@
-namespace AssetStore.Dto.Files;
+﻿namespace AssetStore.Dto.Files;
 
 public class FileDownloadDto
 {
@@ -8,3 +8,4 @@ public class FileDownloadDto
 
     public string FileName { get; init; } = string.Empty;
 }
+

@@ -1,4 +1,4 @@
-namespace AssetStore.Models;
+﻿namespace AssetStore.Models;
 
 public class Review
 {
@@ -18,3 +18,4 @@ public class Review
 
     public ApplicationUser User { get; set; } = null!;
 }
+

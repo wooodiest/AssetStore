@@ -1,13 +1,13 @@
-@model AdminReviewListViewModel
+﻿@model AdminReviewListViewModel
 @{
-    ViewData["Title"] = "Moderacja recenzji";
+    ViewData["Title"] = "Review Moderation";
 }
 
-<h1>Moderacja recenzji</h1>
+<h1>Review Moderation</h1>
 
 @if (!Model.Reviews.Any())
 {
-    <div class="alert alert-info mt-4">Brak recenzji do moderacji.</div>
+    <div class="alert alert-info mt-4">No reviews to moderate.</div>
 }
 else
 {
@@ -16,10 +16,10 @@ else
             <thead>
                 <tr>
                     <th>Asset</th>
-                    <th>Użytkownik</th>
-                    <th>Ocena</th>
-                    <th>Komentarz</th>
-                    <th>Data</th>
+                    <th>User</th>
+                    <th>Rating</th>
+                    <th>Comment</th>
+                    <th>Date</th>
                     <th></th>
                 </tr>
             </thead>
@@ -36,10 +36,10 @@ else
                         <td>@review.PostedAt.ToString("yyyy-MM-dd")</td>
                         <td class="text-end">
                             <form asp-action="DeleteReview" method="post" class="d-inline"
-                                  onsubmit="return confirm('Usunąć tę recenzję?');">
+                                  onsubmit="return confirm('Delete this review?');">
                                 @Html.AntiForgeryToken()
                                 <input type="hidden" name="id" value="@review.Id" />
-                                <button type="submit" class="btn btn-sm btn-outline-danger">Usuń</button>
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                             </form>
                         </td>
                     </tr>
@@ -50,5 +50,6 @@ else
 }
 
 <p class="mt-3">
-    <a asp-action="Index" class="btn btn-outline-secondary">← Panel admina</a>
+    <a asp-action="Index" class="btn btn-outline-secondary">← Admin dashboard</a>
 </p>
+

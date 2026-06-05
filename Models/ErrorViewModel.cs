@@ -1,4 +1,4 @@
-namespace AssetStore.Models
+﻿namespace AssetStore.Models
 {
     public class ErrorViewModel
     {
@@ -7,3 +7,4 @@ namespace AssetStore.Models
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
     }
 }
+

@@ -1,4 +1,4 @@
-namespace AssetStore.Dto.Purchase;
+﻿namespace AssetStore.Dto.Purchase;
 
 public class DownloadAuthorizationDto
 {
@@ -6,3 +6,4 @@ public class DownloadAuthorizationDto
 
     public string FileName { get; init; } = string.Empty;
 }
+

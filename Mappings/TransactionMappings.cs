@@ -1,4 +1,4 @@
-using AssetStore.Dto.Transactions;
+﻿using AssetStore.Dto.Transactions;
 using AssetStore.ViewModels.Transactions;
 
 namespace AssetStore.Mappings;
@@ -18,3 +18,4 @@ public static class TransactionMappings
         }).ToList()
     };
 }
+

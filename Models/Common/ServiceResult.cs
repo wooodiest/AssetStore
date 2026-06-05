@@ -1,4 +1,4 @@
-namespace AssetStore.Models.Common;
+﻿namespace AssetStore.Models.Common;
 
 public class ServiceResult
 {
@@ -35,3 +35,4 @@ public class ServiceResult<T> : ServiceResult
         ErrorCode = errorCode
     };
 }
+

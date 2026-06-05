@@ -1,4 +1,4 @@
-namespace AssetStore.ViewModels.Assets;
+﻿namespace AssetStore.ViewModels.Assets;
 
 public class AssetCatalogViewModel
 {
@@ -39,9 +39,10 @@ public class AssetListItemViewModel
 
     public DateTime UploadDate { get; init; }
 
-    public string PriceDisplay => Price == 0 ? "Darmowy" : $"{Price:F2} PLN";
+    public string PriceDisplay => Price == 0 ? "Free" : $"{Price:F2} PLN";
 
     public string ShortDescription => Description.Length > 120
         ? $"{Description[..120]}..."
         : Description;
 }
+

@@ -1,9 +1,9 @@
-@model AssetFormViewModel
+﻿@model AssetFormViewModel
 @{
-    ViewData["Title"] = "Edytuj asset";
+    ViewData["Title"] = "Edit Asset";
 }
 
-<h1>Edytuj asset</h1>
+<h1>Edit Asset</h1>
 
 <form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="mt-4">
     <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
@@ -36,21 +36,22 @@
     </div>
 
     <div class="d-flex gap-2">
-        <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
-        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Anuluj</a>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Cancel</a>
     </div>
 </form>
 
 <div class="mt-4 pt-3 border-top">
-    <h5 class="text-danger">Strefa niebezpieczna</h5>
-    <p class="text-muted">Usunięcie asseta jest nieodwracalne dla kupujących (soft delete — znika z katalogu).</p>
+    <h5 class="text-danger">Danger zone</h5>
+    <p class="text-muted">Deleting an asset is irreversible for buyers (soft delete - it disappears from the catalog).</p>
     <form asp-action="Delete" asp-route-id="@Model.Id" method="post"
-          onsubmit="return confirm('Czy na pewno chcesz usunąć ten asset?');">
+          onsubmit="return confirm('Are you sure you want to delete this asset?');">
         @Html.AntiForgeryToken()
-        <button type="submit" class="btn btn-outline-danger">Usuń asset</button>
+        <button type="submit" class="btn btn-outline-danger">Delete Asset</button>
     </form>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+

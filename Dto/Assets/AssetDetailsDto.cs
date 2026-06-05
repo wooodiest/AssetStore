@@ -1,4 +1,4 @@
-namespace AssetStore.Dto.Assets;
+﻿namespace AssetStore.Dto.Assets;
 
 public class AssetDetailsDto
 {
@@ -34,3 +34,4 @@ public class AssetDetailsDto
 
     public bool HasReviewed { get; init; }
 }
+

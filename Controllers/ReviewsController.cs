@@ -1,4 +1,4 @@
-using AssetStore.Dto.Reviews;
+﻿using AssetStore.Dto.Reviews;
 using AssetStore.Models.Constants;
 using AssetStore.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -24,7 +24,7 @@ public class ReviewsController : Controller
     {
         if (!ModelState.IsValid)
         {
-            TempData["Error"] = "Nieprawidłowe dane recenzji.";
+            TempData["Error"] = "Invalid review data.";
             return RedirectToAction("Details", "Assets", new { id = dto.AssetId });
         }
 
@@ -41,7 +41,7 @@ public class ReviewsController : Controller
             return RedirectToAction("Details", "Assets", new { id = dto.AssetId });
         }
 
-        TempData["Success"] = "Recenzja została dodana.";
+        TempData["Success"] = "Review has been added.";
         return RedirectToAction("Details", "Assets", new { id = dto.AssetId });
     }
 
@@ -57,9 +57,10 @@ public class ReviewsController : Controller
         }
         else
         {
-            TempData["Success"] = "Recenzja została usunięta.";
+            TempData["Success"] = "Review has been deleted.";
         }
 
         return RedirectToAction("Details", "Assets", new { id = assetId });
     }
 }
+

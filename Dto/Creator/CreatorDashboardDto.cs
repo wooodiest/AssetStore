@@ -1,4 +1,4 @@
-namespace AssetStore.Dto.Creator;
+﻿namespace AssetStore.Dto.Creator;
 
 public class CreatorDashboardDto
 {
@@ -8,3 +8,4 @@ public class CreatorDashboardDto
 
     public IReadOnlyList<CreatorAssetItemDto> Assets { get; init; } = [];
 }
+

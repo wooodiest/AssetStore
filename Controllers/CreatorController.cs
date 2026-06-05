@@ -1,4 +1,4 @@
-using AssetStore.Mappings;
+﻿using AssetStore.Mappings;
 using AssetStore.Models.Constants;
 using AssetStore.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -32,3 +32,4 @@ public class CreatorController : Controller
         return View(AssetMappings.ToViewModel(dashboard));
     }
 }
+

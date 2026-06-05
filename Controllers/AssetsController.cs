@@ -1,4 +1,4 @@
-using AssetStore.Dto.Assets;
+﻿using AssetStore.Dto.Assets;
 using AssetStore.Extensions;
 using AssetStore.Mappings;
 using AssetStore.Models.Constants;
@@ -135,7 +135,7 @@ public class AssetsController : Controller
             return View(RebuildFormViewModel(model, categories));
         }
 
-        TempData["Success"] = "Asset został dodany.";
+        TempData["Success"] = "Asset has been added.";
         return RedirectToAction(nameof(Details), new { id = result.Data });
     }
 
@@ -191,7 +191,7 @@ public class AssetsController : Controller
             return View(RebuildFormViewModel(model, categories, id));
         }
 
-        TempData["Success"] = "Asset został zaktualizowany.";
+        TempData["Success"] = "Asset has been updated.";
         return RedirectToAction(nameof(Details), new { id });
     }
 
@@ -209,7 +209,7 @@ public class AssetsController : Controller
         var result = await _assetService.DeleteAssetAsync(id, userId, cancellationToken);
         return this.ToActionResult(result, () =>
         {
-            TempData["Success"] = "Asset został usunięty.";
+            TempData["Success"] = "Asset has been deleted.";
             return RedirectToAction("Index", "Creator");
         });
     }
@@ -234,3 +234,4 @@ public class AssetsController : Controller
         };
     }
 }
+

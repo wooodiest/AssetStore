@@ -1,9 +1,9 @@
-@model AssetFormViewModel
+﻿@model AssetFormViewModel
 @{
-    ViewData["Title"] = "Dodaj asset";
+    ViewData["Title"] = "Add Asset";
 }
 
-<h1>Dodaj nowy asset</h1>
+<h1>Add New Asset</h1>
 
 <form asp-action="Create" method="post" enctype="multipart/form-data" class="mt-4">
     <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
@@ -30,7 +30,7 @@
             <label asp-for="CategoryId" class="form-label"></label>
             <select asp-for="CategoryId" class="form-select"
                     asp-items="@(new SelectList(Model.Categories, nameof(CategoryOptionViewModel.Id), nameof(CategoryOptionViewModel.Name)))">
-                <option value="">-- Wybierz kategorię --</option>
+                <option value="">-- Select a category --</option>
             </select>
             <span asp-validation-for="CategoryId" class="text-danger"></span>
         </div>
@@ -40,13 +40,14 @@
         <label asp-for="File" class="form-label"></label>
         <input asp-for="File" type="file" class="form-control" />
         <span asp-validation-for="File" class="text-danger"></span>
-        <div class="form-text">Dozwolone: .zip, .glb, .fbx, .png, .jpg, .wav, .mp3 (max 100 MB)</div>
+        <div class="form-text">Allowed: .zip, .glb, .fbx, .png, .jpg, .wav, .mp3 (max 100 MB)</div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Dodaj asset</button>
-    <a asp-controller="Creator" asp-action="Index" class="btn btn-outline-secondary">Anuluj</a>
+    <button type="submit" class="btn btn-primary">Add Asset</button>
+    <a asp-controller="Creator" asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
 </form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+

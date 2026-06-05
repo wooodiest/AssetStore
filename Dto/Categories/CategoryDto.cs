@@ -1,4 +1,4 @@
-namespace AssetStore.Dto.Categories;
+﻿namespace AssetStore.Dto.Categories;
 
 public class CategoryDto
 {
@@ -8,3 +8,4 @@ public class CategoryDto
 
     public string Description { get; init; } = string.Empty;
 }
+

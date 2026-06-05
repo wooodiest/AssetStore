@@ -1,4 +1,4 @@
-namespace AssetStore.ViewModels.Assets;
+﻿namespace AssetStore.ViewModels.Assets;
 
 public class AssetDetailsViewModel
 {
@@ -34,9 +34,9 @@ public class AssetDetailsViewModel
 
     public bool HasReviewed { get; init; }
 
-    public string PriceDisplay => Price == 0 ? "Darmowy" : $"{Price:F2} PLN";
+    public string PriceDisplay => Price == 0 ? "Free" : $"{Price:F2} PLN";
 
-    public string PurchaseButtonText => Price == 0 ? "Pobierz za darmo" : $"Kup za {Price:F2} PLN";
+    public string PurchaseButtonText => Price == 0 ? "Download for free" : $"Buy for {Price:F2} PLN";
 }
 
 public class ReviewItemViewModel
@@ -51,3 +51,4 @@ public class ReviewItemViewModel
 
     public DateTime PostedAt { get; init; }
 }
+

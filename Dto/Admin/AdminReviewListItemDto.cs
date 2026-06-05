@@ -1,4 +1,4 @@
-namespace AssetStore.Dto.Admin;
+﻿namespace AssetStore.Dto.Admin;
 
 public class AdminReviewListItemDto
 {
@@ -16,3 +16,4 @@ public class AdminReviewListItemDto
 
     public DateTime PostedAt { get; init; }
 }
+

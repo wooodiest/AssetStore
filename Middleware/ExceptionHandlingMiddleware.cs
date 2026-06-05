@@ -1,4 +1,4 @@
-using System.Net;
+﻿using System.Net;
 using System.Text.Json;
 
 namespace AssetStore.Middleware;
@@ -62,3 +62,4 @@ public class ExceptionHandlingMiddleware
             || context.Request.Headers.Accept.Any(h => h?.Contains("application/json", StringComparison.OrdinalIgnoreCase) == true);
     }
 }
+

@@ -1,4 +1,4 @@
-using AssetStore.Dto.Purchase;
+﻿using AssetStore.Dto.Purchase;
 using AssetStore.Models.Common;
 
 namespace AssetStore.Services.Interfaces;
@@ -15,3 +15,4 @@ public interface IPurchaseService
         string userId,
         CancellationToken cancellationToken = default);
 }
+

@@ -1,4 +1,4 @@
-namespace AssetStore.Dto.Transactions;
+﻿namespace AssetStore.Dto.Transactions;
 
 public class TransactionListItemDto
 {
@@ -14,3 +14,4 @@ public class TransactionListItemDto
 
     public DateTime PurchaseDate { get; init; }
 }
+

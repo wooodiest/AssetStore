@@ -1,18 +1,18 @@
-@model AssetCatalogViewModel
+﻿@model AssetCatalogViewModel
 @{
-    ViewData["Title"] = "Katalog";
+    ViewData["Title"] = "Catalog";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Katalog assetów</h1>
-    <span class="text-muted">@Model.TotalCount wyników</span>
+    <h1>Asset Catalog</h1>
+    <span class="text-muted">@Model.TotalCount results</span>
 </div>
 
 <form method="get" class="row g-3 mb-4">
     <div class="col-md-4">
-        <label class="form-label" for="categoryId">Kategoria</label>
+        <label class="form-label" for="categoryId">Category</label>
         <select class="form-select" id="categoryId" name="categoryId">
-            <option value="">Wszystkie</option>
+            <option value="">All</option>
             @foreach (var category in Model.Categories)
             {
                 if (Model.SelectedCategoryId == category.Id)
@@ -27,18 +27,18 @@
         </select>
     </div>
     <div class="col-md-4">
-        <label class="form-label" for="maxPrice">Maks. cena (PLN)</label>
+        <label class="form-label" for="maxPrice">Max price (PLN)</label>
         <input type="number" step="0.01" min="0" class="form-control" id="maxPrice" name="maxPrice" value="@Model.SelectedMaxPrice" />
     </div>
     <div class="col-md-4 d-flex align-items-end">
-        <button type="submit" class="btn btn-primary me-2">Filtruj</button>
-        <a asp-action="Index" class="btn btn-outline-secondary">Wyczyść</a>
+        <button type="submit" class="btn btn-primary me-2">Filter</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Clear</a>
     </div>
 </form>
 
 @if (!Model.Items.Any())
 {
-    <div class="alert alert-info">Brak assetów spełniających kryteria.</div>
+    <div class="alert alert-info">No assets match the filter criteria.</div>
 }
 else
 {
@@ -56,24 +56,25 @@ else
                             <small class="text-muted">@asset.UploadDate.ToString("yyyy-MM-dd")</small>
                         </div>
                         <small class="text-muted mt-1">@asset.CreatorName</small>
-                        <a asp-action="Details" asp-route-id="@asset.Id" class="btn btn-outline-primary mt-3">Szczegóły</a>
+                        <a asp-action="Details" asp-route-id="@asset.Id" class="btn btn-outline-primary mt-3">Details</a>
                     </div>
                 </div>
             </div>
         }
     </div>
 
-    <nav class="mt-4" aria-label="Paginacja katalogu">
+    <nav class="mt-4" aria-label="Catalog pagination">
         <ul class="pagination justify-content-center">
             <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
-                <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page - 1)" asp-route-categoryId="@Model.SelectedCategoryId" asp-route-maxPrice="@Model.SelectedMaxPrice">Poprzednia</a>
+                <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page - 1)" asp-route-categoryId="@Model.SelectedCategoryId" asp-route-maxPrice="@Model.SelectedMaxPrice">Previous</a>
             </li>
             <li class="page-item disabled">
-                <span class="page-link">Strona @Model.Page z @Math.Max(Model.TotalPages, 1)</span>
+                <span class="page-link">Page @Model.Page of @Math.Max(Model.TotalPages, 1)</span>
             </li>
             <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
-                <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page + 1)" asp-route-categoryId="@Model.SelectedCategoryId" asp-route-maxPrice="@Model.SelectedMaxPrice">Następna</a>
+                <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page + 1)" asp-route-categoryId="@Model.SelectedCategoryId" asp-route-maxPrice="@Model.SelectedMaxPrice">Next</a>
             </li>
         </ul>
     </nav>
 }
+

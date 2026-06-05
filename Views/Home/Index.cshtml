@@ -1,20 +1,20 @@
 ﻿@model HomeIndexViewModel
 @{
-    ViewData["Title"] = "Strona główna";
+    ViewData["Title"] = "Home";
 }
 
 <div class="text-center mb-5">
     <h1 class="display-4">Asset Store</h1>
     <p class="lead col-lg-8 mx-auto">
-        Marketplace zasobów cyfrowych dla twórców gier — modele 3D, tekstury, audio i skrypty.
-        Przeglądaj, kupuj i pobieraj assety od niezależnych twórców.
+        A digital asset marketplace for game creators - 3D models, textures, audio, and scripts.
+        Browse, purchase, and download assets from independent creators.
     </p>
-    <a class="btn btn-primary btn-lg" asp-controller="Assets" asp-action="Index">Przeglądaj katalog</a>
+    <a class="btn btn-primary btn-lg" asp-controller="Assets" asp-action="Index">Browse catalog</a>
 </div>
 
 @if (Model.LatestAssets.Any())
 {
-    <h2 class="h4 mb-3">Najnowsze assety</h2>
+    <h2 class="h4 mb-3">Latest assets</h2>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         @foreach (var asset in Model.LatestAssets)
         {
@@ -26,7 +26,7 @@
                         <div class="mt-auto d-flex justify-content-between align-items-center">
                             <strong class="text-primary">@asset.PriceDisplay</strong>
                             <a asp-controller="Assets" asp-action="Details" asp-route-id="@asset.Id"
-                               class="btn btn-sm btn-outline-primary">Szczegóły</a>
+                               class="btn btn-sm btn-outline-primary">Details</a>
                         </div>
                     </div>
                 </div>
@@ -34,3 +34,4 @@
         }
     </div>
 }
+

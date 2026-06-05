@@ -1,4 +1,4 @@
-using AssetStore.Dto.Admin;
+﻿using AssetStore.Dto.Admin;
 using AssetStore.Dto.Categories;
 using AssetStore.ViewModels.Admin;
 
@@ -59,3 +59,4 @@ public static class AdminMappings
     };
 
 }
+

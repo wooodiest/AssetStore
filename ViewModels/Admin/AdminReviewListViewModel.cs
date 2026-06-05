@@ -1,4 +1,4 @@
-namespace AssetStore.ViewModels.Admin;
+﻿namespace AssetStore.ViewModels.Admin;
 
 public class AdminReviewListViewModel
 {
@@ -21,3 +21,4 @@ public class AdminReviewItemViewModel
 
     public DateTime PostedAt { get; init; }
 }
+

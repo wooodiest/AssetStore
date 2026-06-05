@@ -1,4 +1,4 @@
-namespace AssetStore.ViewModels.Home;
+﻿namespace AssetStore.ViewModels.Home;
 
 public class HomeIndexViewModel
 {
@@ -15,5 +15,6 @@ public class FeaturedAssetViewModel
 
     public decimal Price { get; init; }
 
-    public string PriceDisplay => Price == 0 ? "Darmowy" : $"{Price:F2} PLN";
+    public string PriceDisplay => Price == 0 ? "Free" : $"{Price:F2} PLN";
 }
+

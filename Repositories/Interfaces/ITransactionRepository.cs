@@ -1,4 +1,4 @@
-using AssetStore.Models;
+﻿using AssetStore.Models;
 
 namespace AssetStore.Repositories.Interfaces;
 
@@ -12,3 +12,4 @@ public interface ITransactionRepository
 
     Task<int> CountByCreatorAsync(string creatorId, CancellationToken cancellationToken = default);
 }
+

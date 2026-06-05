@@ -1,4 +1,4 @@
-namespace AssetStore.Models.Common;
+﻿namespace AssetStore.Models.Common;
 
 public class PagedResult<T>
 {
@@ -16,3 +16,4 @@ public class PagedResult<T>
 
     public bool HasNextPage => Page < TotalPages;
 }
+
