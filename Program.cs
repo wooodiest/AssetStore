@@ -36,6 +36,8 @@ builder.Services.AddScoped<IAssetAuthorizationService, AssetAuthorizationService
 builder.Services.AddScoped<IPurchaseService, PurchaseService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
+builder.Services.AddScoped<IAssetService, AssetService>();
+builder.Services.AddScoped<ICreatorDashboardService, CreatorDashboardService>();
 
 builder.Services.AddControllersWithViews();
 

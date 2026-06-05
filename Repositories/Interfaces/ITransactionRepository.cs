@@ -9,4 +9,6 @@ public interface ITransactionRepository
     Task<IReadOnlyList<Transaction>> GetByUserAsync(string userId, CancellationToken cancellationToken = default);
 
     Task<bool> HasPurchasedAsync(string userId, int assetId, CancellationToken cancellationToken = default);
+
+    Task<int> CountByCreatorAsync(string creatorId, CancellationToken cancellationToken = default);
 }

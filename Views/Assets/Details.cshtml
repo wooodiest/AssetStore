@@ -1,11 +1,80 @@
+@model AssetDetailsViewModel
 @{
-    ViewData["Title"] = "Szczegóły asseta";
+    ViewData["Title"] = Model.Title;
 }
 
-<h1>Szczegóły asseta</h1>
-<p class="text-muted">Publiczny widok szczegółów — zakup i pobieranie wymagają logowania.</p>
+<div class="row">
+    <div class="col-lg-8">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index">Katalog</a></li>
+                <li class="breadcrumb-item active">@Model.Title</li>
+            </ol>
+        </nav>
 
-@if (!User.Identity?.IsAuthenticated ?? true)
-{
-    <div class="alert alert-info">Zaloguj się, aby kupić lub pobrać ten asset.</div>
-}
+        <h1>@Model.Title</h1>
+        <p class="text-muted">
+            <span class="badge bg-secondary">@Model.CategoryName</span>
+            · @Model.CreatorName · @Model.UploadDate.ToString("yyyy-MM-dd")
+        </p>
+
+        <p class="lead">@Model.Description</p>
+
+        <div class="d-flex align-items-center gap-3 mb-4">
+            <h3 class="text-primary mb-0">@Model.PriceDisplay</h3>
+            @if (Model.Reviews.Any())
+            {
+                <span class="text-warning">★ @Model.AverageRating.ToString("F1")</span>
+                <span class="text-muted">(@Model.Reviews.Count recenzji)</span>
+            }
+        </div>
+
+        <div class="d-flex flex-wrap gap-2 mb-4">
+            @if (Model.ShowLoginPrompt)
+            {
+                <div class="alert alert-info w-100 mb-0">
+                    <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Context.Request.Path">Zaloguj się</a>,
+                    aby kupić lub pobrać ten asset.
+                </div>
+            }
+            else if (Model.CanPurchase)
+            {
+                <form asp-action="Purchase" asp-route-id="@Model.Id" method="post" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-success">@Model.PurchaseButtonText</button>
+                </form>
+            }
+            else if (Model.CanDownload)
+            {
+                <a asp-action="Download" asp-route-id="@Model.Id" class="btn btn-primary">Pobierz</a>
+            }
+
+            @if (Model.IsOwner || User.IsInRole(AppRoles.Administrator))
+            {
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Edytuj</a>
+            }
+        </div>
+
+        <h4>Recenzje</h4>
+        @if (!Model.Reviews.Any())
+        {
+            <p class="text-muted">Brak recenzji.</p>
+        }
+        else
+        {
+            @foreach (var review in Model.Reviews)
+            {
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <strong>@review.UserName</strong>
+                            <span class="text-warning">@string.Concat(Enumerable.Repeat("★", review.Rating))</span>
+                        </div>
+                        <p class="mb-1 mt-2">@review.Comment</p>
+                        <small class="text-muted">@review.PostedAt.ToString("yyyy-MM-dd")</small>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

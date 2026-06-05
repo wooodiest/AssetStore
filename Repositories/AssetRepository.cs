@@ -66,6 +66,12 @@ public class AssetRepository : IAssetRepository
             .FirstOrDefaultAsync(a => a.Id == id && !a.IsDeleted, cancellationToken);
     }
 
+    public async Task<Asset?> GetTrackedByIdAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await _context.Assets
+            .FirstOrDefaultAsync(a => a.Id == id && !a.IsDeleted, cancellationToken);
+    }
+
     public async Task<IReadOnlyList<Asset>> GetByCreatorAsync(string creatorId, CancellationToken cancellationToken = default)
     {
         return await _context.Assets

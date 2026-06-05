@@ -1,6 +1,56 @@
+@model AssetFormViewModel
 @{
     ViewData["Title"] = "Edytuj asset";
 }
 
 <h1>Edytuj asset</h1>
-<p>Dostęp tylko dla właściciela asseta lub <strong>Administratora</strong>.</p>
+
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="mt-4">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="Price" class="form-label"></label>
+            <input asp-for="Price" class="form-control" step="0.01" min="0" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="CategoryId" class="form-label"></label>
+            <select asp-for="CategoryId" class="form-select"
+                    asp-items="@(new SelectList(Model.Categories, nameof(CategoryOptionViewModel.Id), nameof(CategoryOptionViewModel.Name)))">
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Anuluj</a>
+    </div>
+</form>
+
+<div class="mt-4 pt-3 border-top">
+    <h5 class="text-danger">Strefa niebezpieczna</h5>
+    <p class="text-muted">Usunięcie asseta jest nieodwracalne dla kupujących (soft delete — znika z katalogu).</p>
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post"
+          onsubmit="return confirm('Czy na pewno chcesz usunąć ten asset?');">
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-outline-danger">Usuń asset</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -14,6 +14,8 @@ public interface IAssetRepository
 
     Task<Asset?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
 
+    Task<Asset?> GetTrackedByIdAsync(int id, CancellationToken cancellationToken = default);
+
     Task<IReadOnlyList<Asset>> GetByCreatorAsync(string creatorId, CancellationToken cancellationToken = default);
 
     Task<string?> GetCreatorIdAsync(int assetId, CancellationToken cancellationToken = default);

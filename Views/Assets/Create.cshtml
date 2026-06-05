@@ -1,6 +1,52 @@
+@model AssetFormViewModel
 @{
     ViewData["Title"] = "Dodaj asset";
 }
 
-<h1>Dodaj asset</h1>
-<p>Wymaga roli: <strong>Creator</strong>.</p>
+<h1>Dodaj nowy asset</h1>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data" class="mt-4">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="Price" class="form-label"></label>
+            <input asp-for="Price" class="form-control" step="0.01" min="0" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="CategoryId" class="form-label"></label>
+            <select asp-for="CategoryId" class="form-select"
+                    asp-items="@(new SelectList(Model.Categories, nameof(CategoryOptionViewModel.Id), nameof(CategoryOptionViewModel.Name)))">
+                <option value="">-- Wybierz kategorię --</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="File" class="form-label"></label>
+        <input asp-for="File" type="file" class="form-control" />
+        <span asp-validation-for="File" class="text-danger"></span>
+        <div class="form-text">Dozwolone: .zip, .glb, .fbx, .png, .jpg, .wav, .mp3 (max 100 MB)</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Dodaj asset</button>
+    <a asp-controller="Creator" asp-action="Index" class="btn btn-outline-secondary">Anuluj</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

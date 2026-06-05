@@ -1,6 +1,79 @@
+@model AssetCatalogViewModel
 @{
     ViewData["Title"] = "Katalog";
 }
 
-<h1>Katalog assetów</h1>
-<p class="text-muted">Publiczny podgląd marketplace — dostępny dla wszystkich (Gość).</p>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Katalog assetów</h1>
+    <span class="text-muted">@Model.TotalCount wyników</span>
+</div>
+
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-4">
+        <label class="form-label" for="categoryId">Kategoria</label>
+        <select class="form-select" id="categoryId" name="categoryId">
+            <option value="">Wszystkie</option>
+            @foreach (var category in Model.Categories)
+            {
+                if (Model.SelectedCategoryId == category.Id)
+                {
+                    <option value="@category.Id" selected="selected">@category.Name</option>
+                }
+                else
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-md-4">
+        <label class="form-label" for="maxPrice">Maks. cena (PLN)</label>
+        <input type="number" step="0.01" min="0" class="form-control" id="maxPrice" name="maxPrice" value="@Model.SelectedMaxPrice" />
+    </div>
+    <div class="col-md-4 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary me-2">Filtruj</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Wyczyść</a>
+    </div>
+</form>
+
+@if (!Model.Items.Any())
+{
+    <div class="alert alert-info">Brak assetów spełniających kryteria.</div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var asset in Model.Items)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge bg-secondary align-self-start mb-2">@asset.CategoryName</span>
+                        <h5 class="card-title">@asset.Title</h5>
+                        <p class="card-text text-muted flex-grow-1">@asset.ShortDescription</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <strong class="text-primary">@asset.PriceDisplay</strong>
+                            <small class="text-muted">@asset.UploadDate.ToString("yyyy-MM-dd")</small>
+                        </div>
+                        <small class="text-muted mt-1">@asset.CreatorName</small>
+                        <a asp-action="Details" asp-route-id="@asset.Id" class="btn btn-outline-primary mt-3">Szczegóły</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <nav class="mt-4" aria-label="Paginacja katalogu">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page - 1)" asp-route-categoryId="@Model.SelectedCategoryId" asp-route-maxPrice="@Model.SelectedMaxPrice">Poprzednia</a>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link">Strona @Model.Page z @Math.Max(Model.TotalPages, 1)</span>
+            </li>
+            <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page + 1)" asp-route-categoryId="@Model.SelectedCategoryId" asp-route-maxPrice="@Model.SelectedMaxPrice">Następna</a>
+            </li>
+        </ul>
+    </nav>
+}

@@ -1,6 +1,67 @@
+@model CreatorDashboardViewModel
 @{
     ViewData["Title"] = "Moje assety";
 }
 
-<h1>Panel Creatora</h1>
-<p>Zarządzanie własnymi assetami i statystykami.</p>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Panel Creatora</h1>
+    <a asp-controller="Assets" asp-action="Create" class="btn btn-primary">+ Dodaj asset</a>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h2 class="display-6">@Model.AssetCount</h2>
+                <p class="text-muted mb-0">Opublikowanych assetów</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h2 class="display-6">@Model.TransactionCount</h2>
+                <p class="text-muted mb-0">Pobrań / zakupów</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (!Model.Assets.Any())
+{
+    <div class="alert alert-info">
+        Nie masz jeszcze żadnych assetów.
+        <a asp-controller="Assets" asp-action="Create">Dodaj pierwszy asset</a>.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Tytuł</th>
+                    <th>Kategoria</th>
+                    <th>Cena</th>
+                    <th>Data uploadu</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var asset in Model.Assets)
+                {
+                    <tr>
+                        <td>@asset.Title</td>
+                        <td>@asset.CategoryName</td>
+                        <td>@asset.PriceDisplay</td>
+                        <td>@asset.UploadDate.ToString("yyyy-MM-dd")</td>
+                        <td class="text-end">
+                            <a asp-controller="Assets" asp-action="Details" asp-route-id="@asset.Id" class="btn btn-sm btn-outline-primary">Podgląd</a>
+                            <a asp-controller="Assets" asp-action="Edit" asp-route-id="@asset.Id" class="btn btn-sm btn-outline-secondary">Edytuj</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

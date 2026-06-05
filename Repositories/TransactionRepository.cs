@@ -37,4 +37,11 @@ public class TransactionRepository : ITransactionRepository
         return await _context.Transactions
             .AnyAsync(t => t.UserId == userId && t.AssetId == assetId, cancellationToken);
     }
+
+    public async Task<int> CountByCreatorAsync(string creatorId, CancellationToken cancellationToken = default)
+    {
+        return await _context.Transactions
+            .Where(t => t.Asset.CreatorId == creatorId)
+            .CountAsync(cancellationToken);
+    }
 }
